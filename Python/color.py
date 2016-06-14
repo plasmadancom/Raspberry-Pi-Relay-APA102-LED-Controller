@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Color.py - Control color & brightness from single push-to-make
+# color.py - Control color & brightness from single push-to-make
 # 
 # By Dan Jones - https://plasmadan.com
 # 
