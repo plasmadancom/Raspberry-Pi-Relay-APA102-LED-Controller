@@ -8,7 +8,9 @@
 # https://www.avforums.com/threads/ongoing-plasmadans-living-room-cinema-office-build.1992617/
 
 # CONFIG
-numpixels = 300												# Number of LEDs in strip
+numpixels = 600												# Number of LEDs in strip
+spi = 1000000												# SPI interface rate, adjust if LEDs flicker or do not show correctly
+rgb_order = 'bgr'											# Adafruit DotStars (APA102C) use 'bgr', change order to work with different strips
 button = 7													# Button input WiringPi port (6 - 7)
 button_delay = 0.2											# Prevent accidental double button presses with this delay (seconds)
 hold_delay = 0.2											# Mimimum time to wait before re-checking button state
@@ -17,23 +19,24 @@ ac_detect_port = 0											# AC detection circuit WiringPi port (0 - 1)
 lux_enable = 1												# Enable / disable brightness cycle. Will cycle colors if disabled. Hold button down to cycle
 lux_steps = 4												# Steps to count when creating brightness levels, lower steps means smoother transition (1 - 25)
 lux_delay = 0.05											# Delay when cyclying through brightness levels (seconds)
-lux_lowest = 5												# Lowest permissible brightness level (0 - 255)
+lux_lowest = 20												# Lowest permissible brightness level (0 - 255)
 color_fade = 1												# Enable / disable color fading effect
 color_fade_steps = 10										# Steps when fading between colors
 color_fade_delay = 0.05										# Delay between each color fade step (seconds)
 print_on_load = 'Colorpicker Loaded!'						# Print if script loads successfully
-savefile = '/var/www/html/color.txt'						# File to save RGB color & brightness level for reference
+savefile = '/var/www/html/color.txt'						# File to save RGB color & brightness level for next boot
+save_caching = 1											# Enable / disable caching of color to global variable, saves loading from savefile each time
 backup_col = [255,255,255,128]								# Backup if savefile error, list of 4 digits 0 - 255 (Red, Green, Blue, Brightness)
 
 # Preset colors (R/G/B)
-white = [255, 255, 255]
-red = [255, 0, 0]
-orange = [255, 50, 0]
-yellow = [255, 255, 0]
-green = [0, 255, 0]
-cyan = [0, 255, 255]
-blue = [0, 0, 255]
-pink = [255, 0, 255]
+white = [255,255,255]
+red = [255,0,0]
+orange = [255,50,0]
+yellow = [255,255,0]
+green = [0,255,0]
+cyan = [0,255,255]
+blue = [0,0,255]
+pink = [255,0,255]
 
 # Array of preset colors
 # Makes it easier to re-order them by name
@@ -57,7 +60,7 @@ wiringpi.pullUpDnControl(button, 1)							# Set pull-down
 wiringpi.pinMode(ac_detect_port, 0)							# Set button to input mode
 wiringpi.pullUpDnControl(ac_detect_port, 1)					# Set pull-down
 
-strip = Adafruit_DotStar(numpixels)							# Declare strip. See https://learn.adafruit.com/adafruit-dotstar-leds
+strip = Adafruit_DotStar(numpixels, spi, order=rgb_order)	# Declare strip. See https://learn.adafruit.com/adafruit-dotstar-leds
 
 strip.begin()												# Initialize pins for output
 strip.show()												# Clear all pixels
@@ -65,25 +68,35 @@ strip.show()												# Clear all pixels
 c_index = 0													# Index of starting color
 sel_c = preset[c_index]										# Select color from array
 
+save_cache = 0
+
 def GetColor():
 	col = backup_col
 	
-	try:
-		with open(savefile, 'r') as f:						# Get color & lux from file
-			f.seek(0,0)
-			fo = f.readline()
-		
-		fo_col = fo.split(',')								# Convert text to array
-	
-	except Exception:										# Something went wrong
-		print "Error: Could not open file %s" % savefile
-		pass												# Nevermind, use backup instead
-	
-	if len(fo_col) != 4:									# That's not right!
-		print "Error: %s does not contain valid color data! Defaulting to backup." % savefile
+	if save_caching and save_cache:
+		col = save_cache									# Load from cache
 	
 	else:
-		col = fo_col										# Looks good
+		try:
+			with open(savefile, 'r') as f:					# Get color & lux from file
+				fo = f.readline()
+			
+			fo_col = fo.split(',')							# Convert text to array
+		
+		except Exception:									# Something went wrong
+			print "Error: Could not open file %s" % savefile
+			pass											# Nevermind, use backup instead
+		
+		try:
+			if len(fo_col) != 4:							# That's not right!
+				print "Error: %s does not contain valid color data! Defaulting to backup." % savefile
+			
+			else:
+				col = fo_col								# Looks good
+		
+		except Exception as e:								# Something went wrong
+			print e
+			pass
 	
 	r = int(col[0])											# Red
 	g = int(col[1])											# Green
@@ -93,7 +106,9 @@ def GetColor():
 	return [r,g,b,l]										# Return list
 
 def SaveCol(r,g,b,l):
-	if r == 0 and g == 0 and b == 0:						# Don't save off state to file, use existing color
+	global save_cache
+	
+	if r == 0 and g == 0 and b == 0:						# Don't save off state, use existing color
 		col = GetColor()
 		r = col[0]
 		g = col[1]
@@ -102,6 +117,9 @@ def SaveCol(r,g,b,l):
 	if l < lux_lowest:										# Too dim, don't save this brightness level
 		col = GetColor()
 		l = col[3]
+	
+	if save_caching and save_cache:
+		save_cache = [r,g,b,l]
 	
 	try:
 		with open(savefile, 'wb') as f:						# Save new color & lux to text file
@@ -117,7 +135,7 @@ def SetColor(c):
 	strip.begin()											# Initialize pins for output
 	strip.setBrightness(col[3])								# Set lux level
 	
-	color = strip.Color(c[1], c[0], c[2])					# Convert color to 24-bit (G/R/B)
+	color = strip.Color(c[0],c[1],c[2])						# Convert color to 24-bit
 	
 	for i in range(0,numpixels-1):							# Set each pixel color
 		strip.setPixelColor(i,color)
@@ -147,15 +165,15 @@ def calculateFade(old,new):
 def ColorFade(c):
 	col = GetColor()
 	
-	rn = calculateFade(c[0], col[0])						# Get red color transitions
-	gn = calculateFade(c[1], col[1])						# Get green color transitions
-	bn = calculateFade(c[2], col[2])						# Get blue color transitions
+	rn = calculateFade(c[0],col[0])							# Get red color transitions
+	gn = calculateFade(c[1],col[1])							# Get green color transitions
+	bn = calculateFade(c[2],col[2])							# Get blue color transitions
 	
 	for key, val in reversed(list(enumerate(rn))):
 		strip.begin()										# Initialize pins for output
 		strip.setBrightness(col[3])							# Set lux level
 		
-		color = strip.Color(gn[key], val, bn[key])			# Convert color to 24-bit (G/R/B)
+		color = strip.Color(val,gn[key],bn[key])			# Convert color to 24-bit
 		
 		for i in range(0,numpixels-1):						# Set each pixel color
 			strip.setPixelColor(i,color)
@@ -165,7 +183,7 @@ def ColorFade(c):
 	
 	SaveCol(c[0],c[1],c[2],col[3])
 
-def takeClosest(li, num):
+def takeClosest(li,num):
 	pos = bisect_left(li, num)								# Find leftmost item greater than or equal to num
 	if pos == 0:											# Start of list
 		return li[0]
@@ -185,7 +203,7 @@ def FadeInOut(r,g,b,l):
 	strip.begin()											# Initialize pins for output
 	strip.setBrightness(l)									# Set lux level
 	
-	color = strip.Color(g, r, b)							# Convert color to 24-bit (G/R/B)
+	color = strip.Color(r,g,b)								# Convert color to 24-bit
 	
 	for i in range(0,numpixels-1):							# Set each pixel color
 		strip.setPixelColor(i,color)
@@ -205,10 +223,10 @@ def presshold(shift=1,pwr_cycle=0):
 		
 		start_lux = 0 if pwr_cycle else lux_lowest			# Allows override of lux_lowest when powering up/down the strip
 		
-		for i in range(start_lux, 255, lux_steps):			# Count up to limit and append values
+		for i in range(start_lux,255,lux_steps):			# Count up to limit and append values
 			lux.append(i)
 		
-		for i in range(-255, -start_lux, lux_steps):		# Count up from -limit and append absolute values
+		for i in range(-255,-start_lux,lux_steps):			# Count up from -limit and append absolute values
 			lux.append(abs(i))
 		
 		closest = takeClosest(lux, col[3])
@@ -246,6 +264,13 @@ def presshold(shift=1,pwr_cycle=0):
 			SetColor(sel_c)
 	
 	sleep(button_delay)										# Delay
+
+try:
+	save_cache = GetColor()
+
+except Exception as e:
+	print e
+	pass
 
 ac_status = 0
 
