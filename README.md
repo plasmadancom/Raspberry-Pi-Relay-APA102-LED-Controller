@@ -105,4 +105,4 @@ Alter the paths as required. The scripts are independent from each other to allo
 
 ## License
 
-MIT © [Dan Jones](https://plasmadan.com)
+MIT © [Dan Jones](https://www.danielkeithjones.com) - [PlasmaDan.com](https://plasmadan.com)
