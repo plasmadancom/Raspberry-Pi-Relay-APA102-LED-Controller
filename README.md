@@ -1,4 +1,4 @@
-# R-Pi-Relay-RGB-Controller
+# R-Pi Relay + RGB Controller
 
 Yet another Raspberry Pi home automation controller!
 
