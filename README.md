@@ -1,6 +1,6 @@
 # R-Pi Relay + RGB Controller
 
-![alt tag](/PCB-photo.jpeg)
+![alt tag](/PCB-photo.jpg)
 
 Allows use of fully addressable RGB LEDs as mood lighting. Ideal for anyone who wants to implement light effects / light shows / sequences, but still retain some basic lighting control. The project uses the WiringPi library to listen for a GPIO input, allowing for sequential color cycling / color fading / dimming of the LEDs; from a single button.
 
