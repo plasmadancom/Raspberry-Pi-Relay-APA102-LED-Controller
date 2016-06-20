@@ -29,9 +29,13 @@ https://github.com/adafruit/Adafruit_DotStar_Pi
 
 ## Build Your Own!
 
-The hardware for this controller is quite simple, and the components are readily available. If you decide to build one for yourself, I have provided the necessary Gerber files for the PCB. These can either be sent to a PCB manufacturer like PCBway.com, or you can etch the board yourself. The PCB design is single-sided to make it easier to re-create yourself. The PCB was designed to fit into a small case (CAMDENBOSS 7200-269C), so there wasn't any room for redundant channels on the controller. If you require additional channels, or want to make any other changes; you may want to create your own PCB instead.
+The hardware for this controller is quite simple, and the components are readily available. If you decide to build one for yourself, I have provided the necessary Gerber files for the PCB. These can either be sent to a PCB manufacturer like http://www.pcbway.com, or you can etch the board yourself. The PCB design is single-sided to make it easier to re-create yourself. The PCB was designed to fit into a small case (CAMDENBOSS 7200-269C), so there wasn't any room for redundant channels on the controller. If you require additional channels, or want to make any other changes; you may want to create your own PCB instead.
 
 Parts list: https://goo.gl/5SdG7h
+
+## Raspberry Pi Compatibility
+
+Since the code is just basic Python, it will work an any version of Raspberry Pi, including the Pi Zero. The PCB design uses a 26-way header (same as the Raspberry Pi model B), so all you need is suitable ribbon cable to suit your Pi (you can make these yourself easily).
 
 ## Installation
 
