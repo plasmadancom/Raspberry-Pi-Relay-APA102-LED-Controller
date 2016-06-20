@@ -35,7 +35,7 @@ Parts list: https://goo.gl/5SdG7h
 
 ## Raspberry Pi Compatibility
 
-Since the code is just basic Python, it will work an any version of Raspberry Pi, including the Pi Zero. The PCB design uses a 26-way header (same as the Raspberry Pi model B), so all you need is suitable ribbon cable to suit your Pi (you can make these yourself easily).
+Since the code is just basic Python, it will work an any version of Raspberry Pi, including the Pi Zero. The PCB design uses a 26-way header (same as the Raspberry Pi model B), so all you need is a ribbon cable to suit your Pi (you can make these yourself easily).
 
 ## Installation
 
