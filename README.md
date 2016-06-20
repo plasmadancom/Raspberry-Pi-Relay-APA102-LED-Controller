@@ -27,6 +27,12 @@ https://github.com/WiringPi/WiringPi-Python
 
 https://github.com/adafruit/Adafruit_DotStar_Pi
 
+## Build Your Own!
+
+The hardware for this controller is quite simple, and the components are readily available. If you decide to build one for yourself, I have provided the necessary Gerber files for the the PCB. These can either be sent to a PCB manufacturer like PCBway.com, or you can etch the board yourself. The PCB design is single-sided to make it easier to re-create yourself. The PCB was designed to fit into a small case (CAMDENBOSS 7200-269C), so there wasn't any room for redundant channels. If you require additional channels, or want to make any other changes; you may want to create your own PCB instead.
+
+Parts list: https://goo.gl/5SdG7h
+
 ## Installation
 
 Update Raspian
