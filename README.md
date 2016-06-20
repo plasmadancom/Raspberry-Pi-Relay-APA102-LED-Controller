@@ -45,6 +45,10 @@ The controller is designed to work with 4-wire type addressable LED strips; such
 
 ![alt tag](/example-wiring-diagram.png)
 
+In this example, the LED driver and halogen lighting circuits are linked to the changeover relay channels. This allows for standard 2-way / intermediate (3-way if you're outside the UK) light switches to be used in conjunction with the controller. This means that if the controller went offline for whatever reason, your lights will still work!
+
+Notice in the example that the switched-line is looped back into the AC detect circuits. This is to allow the Raspberry Pi to sense when the lights / LED driver are powered, regardless of relay / switch positions. This should make for a much nicer looking web GUI (when I get around to finishing that).
+
 ## Installation
 
 Update Raspian
