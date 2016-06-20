@@ -2,6 +2,8 @@
 
 Yet another Raspberry Pi home automation controller!
 
+![alt tag](/PCB-3D-view.png)
+
 Allows use of fully addressable RGB LEDs as mood lighting. Ideal for anyone who wants to implement light effects / light shows / sequences, but still retain some basic lighting control. The project uses the WiringPi library to listen for a GPIO input, allowing for sequential color cycling / color fading / dimming of the LEDs; from a single button.
 
 Also offers a blind motor controller script; to control hard-wired home automation type blind / shutter motors from a single button. Can also be used with motorised projector screens for use in home cinema applications.
