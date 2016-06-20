@@ -39,6 +39,12 @@ Parts list: https://goo.gl/5SdG7h
 
 Since the code is just basic Python, it will work an any version of Raspberry Pi, including the Pi Zero. The PCB design uses a 26-way header (same as the Raspberry Pi model B), so all you need is a ribbon cable to suit your Pi (you can make these yourself easily).
 
+## Wiring
+
+The controller is designed to work with 4-wire type addressable LED strips; such as APA-102C. Everything else on the controller is pretty-much universal in terms of wiring options. I have provided an example wiring diagram:
+
+![alt tag](/example-wiring-diagram.png)
+
 ## Installation
 
 Update Raspian
