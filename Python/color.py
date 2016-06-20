@@ -9,7 +9,7 @@
 
 # CONFIG
 numpixels = 600												# Number of LEDs in strip
-spi = 1000000												# SPI interface rate, adjust if LEDs flicker or do not show correctly
+spi = 4000000												# SPI interface rate, adjust if LEDs flicker or do not show correctly
 rgb_order = 'bgr'											# Adafruit DotStars (APA102C) use 'bgr', change order to work with different strips
 button = 7													# Button input WiringPi port (6 - 7)
 button_delay = 0.2											# Prevent accidental double button presses with this delay (seconds)
