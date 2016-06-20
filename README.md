@@ -96,7 +96,7 @@ Follow their guide here: https://github.com/WiringPi/WiringPi-Python
 
 Edit the config options in color.py / motor.py as required.
 
-FTP into the Pi and transfer your modified scripts to ```/var/www/html/Python```, or choose your own location. Be sure to set file permissions to 755 in the web directory.
+FTP into the Pi and transfer your modified scripts to ```/var/www/html/python```, or choose your own location. Be sure to set file permissions to 755 in the web directory.
 
 To make the scripts run at startup, edit rc.local:
 
