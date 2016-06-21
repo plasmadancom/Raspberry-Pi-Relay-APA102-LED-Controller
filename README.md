@@ -37,7 +37,7 @@ Parts list: https://goo.gl/5SdG7h
 
 ## Stackable
 
-The PCBs can easily be stacked using standoffs. The [CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75) enclosure is tall enough accomodate two stacked boards, so if you require more channels, this is a simple solution.
+The PCBs can easily be stacked using standoffs. The [CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75) enclosure is tall enough accommodate two stacked boards, so if you require more channels, this is a simple solution.
 
 ## Raspberry Pi Compatibility
 
