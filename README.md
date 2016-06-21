@@ -45,7 +45,7 @@ Since the code is just basic Python, it will work on any version of Raspberry Pi
 
 ## Wiring
 
-The controller is designed to work with 4-wire type addressable LED strips; such as APA-102C. Everything else on the controller is pretty-much universal in terms of wiring options. I have provided an example wiring diagram:
+The controller is designed to work with 4-wire type addressable LED strips; such as APA-102C or WS2801. Everything else on the controller is pretty-much universal in terms of wiring options. I have provided an example wiring diagram:
 
 ![alt tag](/example-wiring-diagram.png)
 
