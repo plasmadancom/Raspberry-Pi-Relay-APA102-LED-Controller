@@ -90,10 +90,16 @@ Allow Apache permission
 chmod -R 755 /var/www
 ```
 
-Allow .htaccess files. Edit vsftpd.conf
+Edit vsftpd.conf
 
 ```
 nano /etc/vsftpd.conf
+```
+
+Uncomment the following line:
+
+```
+write_enable=YES
 ```
 
 Add the following line:
