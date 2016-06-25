@@ -55,6 +55,10 @@ Notice in the example that the switched-line is looped back into the AC detect c
 
 ## Installation
 
+```
+sudo bash
+```
+
 Update Raspian
 
 ```
