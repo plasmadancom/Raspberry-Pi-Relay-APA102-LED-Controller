@@ -84,12 +84,6 @@ Change user for vsftpd
 chown -R pi /var/www
 ```
 
-Allow Apache permission
-
-```
-chmod -R 755 /var/www
-```
-
 Edit vsftpd.conf
 
 ```
@@ -159,6 +153,10 @@ FTP into the Pi and transfer your modified scripts to ```/var/www/html/python```
 Add the dotstar.c file (from [here](https://github.com/adafruit/Adafruit_DotStar_Pi)) to the same directory; this is required for the RGB LEDs to work.
 
 Be sure to set file permissions to 755 in the web directory.
+
+```
+chmod -R 755 /var/www
+```
 
 To make the scripts run at startup, edit rc.local:
 
