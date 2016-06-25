@@ -75,7 +75,7 @@ apt-get install apache2 php5 libapache2-mod-php5 mysql-server php5-mysql
 Install vsftpd
 
 ```
-apt-get install vsftpd
+apt-get install vsftpd -y
 ```
 
 Change user for vsftpd
@@ -108,9 +108,41 @@ Restart vsftpd
 service vsftpd restart
 ```
 
+## Installing WiringPi
+
+Either use the instructions below or follow their guide here: https://github.com/WiringPi/WiringPi-Python
+
+Install git
+
+```
+apt-get install git-core -y
+```
+
+Get repo
+
+```
+git clone git://git.drogon.net/wiringPi
+```
+
+Build WiringPi
+
+```
+cd wiringPi
+git pull origin
+./build
+```
+
+Install dependencies
+
+```
+apt-get install python-dev python-pip -y
+```
+
 Install WiringPi
 
-Follow their guide here: https://github.com/WiringPi/WiringPi-Python
+```
+pip install wiringpi2
+```
 
 ## Usage
 
