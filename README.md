@@ -145,7 +145,7 @@ pip install wiringpi2
 ```
 
 ## Enable SPI
-`
+
 Needed for RGB LEDs to work.
 
 ```
