@@ -144,6 +144,16 @@ Install WiringPi
 pip install wiringpi2
 ```
 
+## Enable SPI
+`
+Needed for RGB LEDs to work.
+
+```
+raspi-config
+```
+
+Scroll to "Advanced Options", "SPI", set to enabled.
+
 ## Usage
 
 Edit the config options in color.py / motor.py as required.
