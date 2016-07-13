@@ -69,7 +69,7 @@ apt-get upgrade
 Install Apache components
 
 ```
-apt-get install apache2 php5 libapache2-mod-php5 mysql-server php5-mysql
+apt-get install apache2 php5 libapache2-mod-php5 mysql-server php5-mysql phpmyadmin
 ```
 
 Install vsftpd
