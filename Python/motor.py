@@ -29,36 +29,36 @@ from time import sleep
 
 wiringpi.wiringPiSetup()								# Set WiringPi ports. See http://wiringpi.com/pins/
 
-wiringpi.pinMode(button, 0)								# Set button to input mode
-wiringpi.pullUpDnControl(button, 1)						# Set pull-down
+wiringpi.pinMode(button,0)								# Set button to input mode
+wiringpi.pullUpDnControl(button,2)						# Set pull-up
 
 def outputs(mode=1):
 	ports = [buffer1, buffer2, motor_pwr, motor_relay]
 	
 	for port in ports:
-		wiringpi.pinMode(port, mode)
-		wiringpi.digitalWrite(port, 0)
+		wiringpi.pinMode(port,mode)
+		wiringpi.digitalWrite(port,0)
 
 outputs()												# Set WiringPi ports to output mode
 
 def stop():
 	global direction
 	
-	wiringpi.digitalWrite(motor_pwr, 0)					# Stop motor_pwr
-	wiringpi.digitalWrite(motor_relay, 0)				# Stop motor_relay
+	wiringpi.digitalWrite(motor_pwr,0)					# Stop motor_pwr
+	wiringpi.digitalWrite(motor_relay,0)				# Stop motor_relay
 	
 	direction = not direction							# Swap motor direction
 
 def presshold():
-	if wiringpi.digitalRead(button):					# Still pressing! Don't use timer
-		while wiringpi.digitalRead(button):				# Re-check...
+	if not wiringpi.digitalRead(button):				# Still pressing! Don't use timer
+		while not wiringpi.digitalRead(button):			# Re-check...
 			sleep(0.05)
 	
 	else:												# Use timer
 		for i in range(timer*20):
 			sleep(0.05)
 			
-			if wiringpi.digitalRead(button) or wiringpi.digitalRead(buffer1) or wiringpi.digitalRead(buffer2):
+			if not wiringpi.digitalRead(button) or wiringpi.digitalRead(buffer1) or wiringpi.digitalRead(buffer2):
 				break									# Interrupt timer
 
 def start(relay=0):
@@ -76,7 +76,7 @@ print 'Motor Controller Loaded!'
 
 try:
 	while True:											# Loop forever
-		if wiringpi.digitalRead(button):				# If button is pressed
+		if not wiringpi.digitalRead(button):			# If button is pressed
 			if wiringpi.digitalRead(motor_pwr):			# Already running? (Maybe the web GUI triggered it)
 				stop()
 			
