@@ -8,8 +8,8 @@
 # https://www.avforums.com/threads/ongoing-plasmadans-living-room-cinema-office-build.1992617/
 
 # CONFIG
-numpixels = 600												# Number of LEDs in strip
-spi = 4000000												# SPI interface rate, adjust if LEDs flicker or do not show correctly
+numpixels = 300												# Number of LEDs in strip
+spi = 1000000												# SPI interface rate, adjust if LEDs flicker or do not show correctly
 rgb_order = 'bgr'											# Adafruit DotStars (APA102C) use 'bgr', change order to work with different strips
 button = 7													# Button input WiringPi port (6 - 7)
 button_delay = 0.2											# Prevent accidental double button presses with this delay (seconds)
@@ -54,13 +54,13 @@ from dotstar import Adafruit_DotStar						# Must be in same directory. Source: h
 
 wiringpi.wiringPiSetup()									# Set WiringPi ports. See http://wiringpi.com/pins/
 
-wiringpi.pinMode(button, 0)									# Set button to input mode
-wiringpi.pullUpDnControl(button, 1)							# Set pull-down
+wiringpi.pinMode(button,0)									# Set button to input mode
+wiringpi.pullUpDnControl(button,2)							# Set pull-up
 
-wiringpi.pinMode(ac_detect_port, 0)							# Set button to input mode
-wiringpi.pullUpDnControl(ac_detect_port, 1)					# Set pull-down
+wiringpi.pinMode(ac_detect_port,0)							# Set button to input mode
+wiringpi.pullUpDnControl(ac_detect_port,1)					# Set pull-down
 
-strip = Adafruit_DotStar(numpixels, spi, order=rgb_order)	# Declare strip. See https://learn.adafruit.com/adafruit-dotstar-leds
+strip = Adafruit_DotStar(numpixels,spi,order=rgb_order)		# Declare strip. See https://learn.adafruit.com/adafruit-dotstar-leds
 
 strip.begin()												# Initialize pins for output
 strip.show()												# Clear all pixels
@@ -78,7 +78,7 @@ def GetColor():
 	
 	else:
 		try:
-			with open(savefile, 'r') as f:					# Get color & lux from file
+			with open(savefile,'r') as f:					# Get color & lux from file
 				fo = f.readline()
 			
 			fo_col = fo.split(',')							# Convert text to array
@@ -122,7 +122,7 @@ def SaveCol(r,g,b,l):
 		save_cache = [r,g,b,l]
 	
 	try:
-		with open(savefile, 'wb') as f:						# Save new color & lux to text file
+		with open(savefile,'wb') as f:						# Save new color & lux to text file
 			f.write(str(r) + ',' + str(g) + ',' + str(b) + ',' + str(l))
 	
 	except Exception:										# Something went wrong
@@ -137,7 +137,7 @@ def SetColor(c):
 	
 	color = strip.Color(c[0],c[1],c[2])						# Convert color to 24-bit
 	
-	for i in range(0,numpixels-1):							# Set each pixel color
+	for i in range(numpixels):								# Set each pixel color
 		strip.setPixelColor(i,color)
 	
 	strip.show()											# Light up the strip
@@ -175,11 +175,25 @@ def ColorFade(c):
 		
 		color = strip.Color(val,gn[key],bn[key])			# Convert color to 24-bit
 		
-		for i in range(0,numpixels-1):						# Set each pixel color
+		for i in range(numpixels):							# Set each pixel color
 			strip.setPixelColor(i,color)
 		
 		strip.show()										# Light up the strip
 		sleep(color_fade_delay)
+	
+	SaveCol(c[0],c[1],c[2],col[3])
+
+def ColorWipe(c):
+	col = GetColor()
+	
+	strip.begin()											# Initialize pins for output
+	strip.setBrightness(col[3])								# Set lux level
+	
+	color = strip.Color(c[0],c[1],c[2])						# Convert color to 24-bit
+	
+	for i in range(numpixels):								# Set each pixel color
+		strip.setPixelColor(i,color)
+		strip.show()										# Wipe as fast as SPI will allow
 	
 	SaveCol(c[0],c[1],c[2],col[3])
 
@@ -205,7 +219,7 @@ def FadeInOut(r,g,b,l):
 	
 	color = strip.Color(r,g,b)								# Convert color to 24-bit
 	
-	for i in range(0,numpixels-1):							# Set each pixel color
+	for i in range(numpixels):								# Set each pixel color
 		strip.setPixelColor(i,color)
 	
 	strip.show()											# Light up the strip
@@ -215,7 +229,7 @@ def presshold(shift=1,pwr_cycle=0):
 	
 	sleep(hold_delay)										# Delay
 	
-	if lux_enable and wiringpi.digitalRead(button):			# Still pressing? Adjust brightness!
+	if lux_enable and not wiringpi.digitalRead(button):		# Still pressing? Adjust brightness!
 		col = GetColor()
 		
 		lux = []											# Create array of lux levels to use
@@ -238,7 +252,7 @@ def presshold(shift=1,pwr_cycle=0):
 		
 		lf = lux[l_index]									# Select the lux from array
 		
-		while wiringpi.digitalRead(button):					# Re-check...
+		while not wiringpi.digitalRead(button):				# Re-check...
 			FadeInOut(col[0],col[1],col[2],lf)				# Fade in & out
 			
 			l_index = (l_index + 1) % len(lux)				# Iterate through array of lux levels, then reset
@@ -267,6 +281,7 @@ def presshold(shift=1,pwr_cycle=0):
 
 try:
 	save_cache = GetColor()
+	c_index = preset.index([save_cache[0],save_cache[1],save_cache[2]])
 
 except Exception as e:
 	print e
@@ -283,7 +298,7 @@ try:
 				presshold(0,1)								# Re-initialize strip
 				ac_status = 1
 				
-			if wiringpi.digitalRead(button):				# If button is pressed
+			if not wiringpi.digitalRead(button):			# If button is pressed
 				if ac_status:
 					presshold()
 				
@@ -299,7 +314,7 @@ try:
 				ac_status = 0
 	else:
 		while True:											# Loop forever
-			if wiringpi.digitalRead(button):				# If button is pressed
+			if not wiringpi.digitalRead(button):			# If button is pressed
 				presshold()
 
 finally:
