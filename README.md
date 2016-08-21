@@ -47,7 +47,7 @@ Since the code is just basic Python, it will work on any version of Raspberry Pi
 
 The controller is designed to work with 4-wire type addressable LED strips; such as APA-102C or WS2801. Everything else on the controller is pretty-much universal in terms of wiring options. I have provided an example wiring diagram:
 
-![alt tag](/example-wiring-diagram.png)
+![alt tag](/example-wiring-diagram-v2.png)
 
 In this example, the LED driver and halogen lighting circuits are linked to the changeover relay channels. This allows for standard 2-way / intermediate (3-way if you're outside the UK) light switches to be used in conjunction with the controller. This means that if the controller went offline for whatever reason, your lights will still work!
 
