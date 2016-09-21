@@ -71,7 +71,7 @@ apt-get upgrade
 Install Apache components
 
 ```
-apt-get install apache2 php5 libapache2-mod-php5 mysql-server php5-mysql phpmyadmin
+apt-get install apache2 php5 libapache2-mod-php5
 ```
 
 Install vsftpd
@@ -111,10 +111,6 @@ service vsftpd restart
 ```
 
 ## Installing WiringPi
-
-Either use the instructions below or follow their guide here: https://github.com/WiringPi/WiringPi-Python
-
-Install git
 
 ```
 apt-get install git-core -y
@@ -162,7 +158,7 @@ Edit the config options in color.py / motor.py as required.
 
 FTP into the Pi and transfer your modified scripts to ```/var/www/html/python```, or choose your own location.
 
-Add the dotstar.c file (from [here](https://github.com/adafruit/Adafruit_DotStar_Pi)) to the same directory; this is required for the RGB LEDs to work.
+Add the dotstar files (from [here](https://github.com/adafruit/Adafruit_DotStar_Pi)) to the same directory; this is required for the RGB LEDs to work.
 
 Be sure to set file permissions to 755 in the web directory.
 
@@ -187,4 +183,4 @@ Alter the paths as required. The scripts are independent from each other to allo
 
 ## License
 
-MIT © [Dan Jones](https://www.danielkeithjones.com) - [PlasmaDan.com](https://plasmadan.com)
+GNU © [Dan Jones](https://www.danielkeithjones.com) - [PlasmaDan.com](https://plasmadan.com)
