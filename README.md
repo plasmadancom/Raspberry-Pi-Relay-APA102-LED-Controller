@@ -1,25 +1,40 @@
-# R-Pi Relay + RGB Controller
+# Raspberry Pi Relay & APA102 LED Controller
 
 ![alt tag](/pcb-animated.gif)
 
-Allows use of fully addressable RGB LEDs as mood lighting. Ideal for anyone who wants to implement light effects / light shows / sequences, but still retain some basic lighting control. The project uses the WiringPi library to listen for a GPIO input, allowing for sequential color cycling / color fading / dimming of the LEDs; from a single button.
+Raspberry Pi Relay & APA102 LED controller allows control & switching of APA102 addressable LEDs (and LED driver) using a web GUI. Motor controller functionality is also built-in to control hard-wired home automation type blind / projector screen motors. Ideal for use in home cinema applications.
 
-Also offers a blind motor controller script; to control hard-wired home automation type blind / shutter motors from a single button. Can also be used with motorised projector screens for use in home cinema applications.
+## Features
 
-# Motivation
+* APA102 LED control
+* 2x changeover relay control
+* 2x mains AC input detection
+* Motorised blind / projector screen control
 
-This project was created for use in my own home cinema build. I wanted a single-room home automation solution that would offer relay control of mains AC lighting, blind motor control and addressable RGB control in a single unit.
+## Motivation
+
+This project was created for use in my own home cinema build. I wanted a single-room home automation solution that would offer addressable RGB control, with the ability to directly switch a mains AC powered LED driver. Additional relay channels where added to the prototype to allow other circuits to be switched using the controller, such as spotlights. The motorised blind control relays were added into the design during my home cinema build.
 
 Home cinema build log: https://www.avforums.com/threads/ongoing-plasmadans-living-room-cinema-office-build.1992617/
 
-## TODO
+## Responsive Web GUI
 
-Finish the web GUI
+![alt tag](http://img.photobucket.com/albums/v287/plasma_dan/iphone6-mockup_zpsm93mbcdt.png~original)
+
+The GUI includes controls for the changeover relay channels, motorised blind / projector screen, a full RGB color picker for the APA102 LEDs and a preset control to cycle built-in light modes / effects. There is also the ability to reboot the Raspberry Pi directly from the GUI, making development & testing easier for your application.
+
+Built on bootstrap 3; the GUI is fully responsive and adapts to any screen size / orientation.
+
+## App Features
+
+As well as support for mobile devices, the GUI includes modern manifest data to allow it to work more like a native app. This means when you save the GUI to the home-screen it will load & function without an address-bar, just like an app.
 
 ## Prerequisites
 
-Raspberry Pi with clean Raspian install:
+Raspberry Pi with Raspian:
 https://www.raspberrypi.org/downloads/raspbian/
+
+I recommend a clean Raspian install before proceeding.
 
 ## Dependencies
 
@@ -29,7 +44,7 @@ https://github.com/adafruit/Adafruit_DotStar_Pi
 
 ## Build Your Own!
 
-The hardware for this controller is quite simple, all the components are readily available. If you decide to build one for yourself, I have provided the necessary Gerber files for the PCB. These can either be sent to a PCB manufacturer like [PCBway](http://www.pcbway.com), or you can etch the board yourself (see included transfer pdf). The PCB design is single-sided to make it easier to re-create yourself. The PCB was designed to fit into a small case ([CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75)), so there wasn't any room for redundant channels on the controller. If you require additional channels, or want to make any other changes; you may want to create your own PCB instead.
+The hardware for this controller is quite simple, all the components are readily available. If you decide to build one for yourself, I have provided the necessary Gerber files for the PCB. These can either be sent to a PCB manufacturer like [PCBway](http://www.pcbway.com), or you can etch the board yourself (see included transfer pdf). The PCB design is single-sided to make it easier to re-create yourself. The PCB was designed to fit into a small case ([CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75)). If you require additional inputs / outputs, or want to make any other changes; you may want to create your own PCB instead.
 
 ![alt tag](/pcb-black-transfer.png)
 
@@ -37,23 +52,25 @@ Parts list: https://goo.gl/5SdG7h
 
 ## Stackable
 
-The PCBs can easily be stacked using standoffs. The [CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75) enclosure is tall enough to accommodate two stacked boards. So if you require more channels; this is a simple solution.
+The PCB can easily be stacked using standoffs. The [CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75) enclosure is tall enough to accommodate two stacked boards. So if you require more channels; this is a simple solution.
 
 ## Raspberry Pi Compatibility
 
-Since the code is just basic Python, it will work on any version of Raspberry Pi, including the Pi Zero. The PCB design uses a 26-way header (same as the Raspberry Pi model B), so all you need is a ribbon cable to suit your Pi (you can make these yourself easily).
+* All except the original Model B (rev. 1) - Although with some changes it can be made to work.
+
+The PCB design uses a 26-way header (same as the Raspberry Pi model B). A 26-way to 40-way ribbon cable will be needed to work with Raspberry Pi B+ and above.
 
 ## Wiring
 
 ![alt tag](http://img.photobucket.com/albums/v287/plasma_dan/My%20Projects/Dads%20House/Living%20Room/2016-08-19%2016.07.03_zps45mc1tgi.jpg~original)
 
-The controller is designed to work with 4-wire type addressable LED strips; such as APA-102C or WS2801. Everything else on the controller is pretty-much universal in terms of wiring options. I have provided an example wiring diagram:
+The controller is designed to work with 4-wire type addressable LED strips; such as APA102 (AKA Adafruit DotStars) or WS2801. Everything else on the controller is pretty-much universal in terms of wiring options. I have provided an example wiring diagram:
 
 ![alt tag](/example-wiring-diagram-v2.png)
 
 In this example, the LED driver and halogen lighting circuits are linked to the changeover relay channels. This allows for standard 2-way / intermediate (3-way if you're outside the UK) light switches to be used in conjunction with the controller. This means that if the controller went offline for whatever reason, your lights will still work!
 
-Notice in the example that the switched-line is looped back into the AC detect circuits. This is to allow the Raspberry Pi to sense when the lights / LED driver are powered, regardless of relay / switch positions. This should make for a much nicer looking web GUI (when I get around to finishing that).
+Notice in the example that the switched-line is looped back into the AC detect circuits. This is to allow the Raspberry Pi to sense when the lights / LED driver are powered, regardless of relay / switch positions. If you don't require 2-way control you can disable this in the config.
 
 ## Installation
 
@@ -74,7 +91,95 @@ Install Apache components
 apt-get install apache2 php5 libapache2-mod-php5
 ```
 
-Install vsftpd
+## Install WiringPi
+
+```
+apt-get install git-core -y
+```
+
+Get repo
+
+```
+git clone git://git.drogon.net/wiringPi
+```
+
+Build WiringPi
+
+```
+cd wiringPi
+git pull origin
+./build
+```
+
+Install python-dev  & pip
+
+```
+apt-get install python-dev python-pip -y
+```
+
+Install WiringPi
+
+```
+pip install wiringpi2
+```
+
+## Enable SPI
+
+Needed for RGB LEDs to work.
+
+```
+raspi-config
+```
+
+Scroll to "Advanced Options", "SPI", set to enabled.
+
+## Clone Repo Contents
+
+```
+cd /var/www/html
+```
+
+Empty default Apache files
+
+```
+rm -rf *
+```
+
+Clone repo
+
+```
+git clone https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller .
+```
+
+Be sure to set file permissions to 755 in the web directory.
+
+```
+chmod -R 755 /var/www
+```
+
+Apache requires sudo permission to use WiringPi.
+Note: If your Raspberry Pi is on a shared network you may want to find a more secure method than this.
+
+```
+echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+```
+
+To make the Python scripts run at startup, edit rc.local:
+
+```
+nano /etc/rc.local
+```
+
+Add before exit 0
+
+```
+python /var/www/html/python/motor.py&
+python /var/www/html/python/preset.py&
+```
+
+The scripts are independent from each other to allow you to just use what you need.
+
+## Optional: install vsftpd for easier file editing
 
 ```
 apt-get install vsftpd -y
@@ -110,77 +215,11 @@ Restart vsftpd
 service vsftpd restart
 ```
 
-## Installing WiringPi
+## Config
 
-```
-apt-get install git-core -y
-```
-
-Get repo
-
-```
-git clone git://git.drogon.net/wiringPi
-```
-
-Build WiringPi
-
-```
-cd wiringPi
-git pull origin
-./build
-```
-
-Install dependencies
-
-```
-apt-get install python-dev python-pip -y
-```
-
-Install WiringPi
-
-```
-pip install wiringpi2
-```
-
-## Enable SPI
-
-Needed for RGB LEDs to work.
-
-```
-raspi-config
-```
-
-Scroll to "Advanced Options", "SPI", set to enabled.
-
-## Usage
-
-Edit the config options in color.py / motor.py as required.
-
-FTP into the Pi and transfer your modified scripts to ```/var/www/html/python```, or choose your own location.
-
-Add the dotstar files (from [here](https://github.com/adafruit/Adafruit_DotStar_Pi)) to the same directory; this is required for the RGB LEDs to work.
-
-Be sure to set file permissions to 755 in the web directory.
-
-```
-chmod -R 755 /var/www
-```
-
-To make the scripts run at startup, edit rc.local:
-
-```
-nano /etc/rc.local
-```
-
-Add before exit 0
-
-```
-python /var/www/html/python/motor.py&
-python /var/www/html/python/color.py&
-```
-
-Alter the paths as required. The scripts are independent from each other to allow you to just use what you need.
+There are lots of user customisable options in the config file :```/python/config.py```
+Edit the config options as required.
 
 ## License
 
-GNU © [Dan Jones](https://www.danielkeithjones.com) - [PlasmaDan.com](https://plasmadan.com)
+MIT © Dan Jones - [PlasmaDan.com](https://plasmadan.com)
