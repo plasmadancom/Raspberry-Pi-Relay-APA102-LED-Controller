@@ -39,7 +39,7 @@ I recommend a clean Raspian install before proceeding.
 
 ## Dependencies
 
-https://github.com/WiringPi/WiringPi-Python
+APA102 LEDs require the Python port of the Adafruit dotstar library to function. This is included in this repo for completeness.
 
 https://github.com/adafruit/Adafruit_DotStar_Pi
 
