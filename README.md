@@ -10,6 +10,7 @@ Raspberry Pi Relay & APA102 LED controller allows control & switching of APA102 
 * 2x changeover relay control
 * 2x mains AC input detection
 * Motorised blind / projector screen control
+* 2x TTL inputs for external buttons
 
 ## Motivation
 
