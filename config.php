@@ -48,7 +48,7 @@ foreach ($py_config as $line) {
 	$parsed = parse_config($line);
 	
 	// Set variable if found
-    if($parsed !== false) ${$parsed[0]} = $parsed[1];
+	if($parsed !== false) ${$parsed[0]} = $parsed[1];
 }
 
 ?>
