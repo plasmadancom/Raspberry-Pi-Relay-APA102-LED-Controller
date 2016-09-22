@@ -1,0 +1,227 @@
+/*
+ * style.css
+ * 
+ * Copyright (C) 2016 Dan Jones - https://plasmadan.com
+ * 
+ * Full project details here:
+ * https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller
+ * https://www.avforums.com/threads/ongoing-plasmadans-living-room-cinema-office-build.1992617/
+ * 
+ * -----------------------------------------------------------------------------
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * -----------------------------------------------------------------------------
+ */
+
+
+@-ms-viewport {width: device-width;}
+@-o-viewport {width: device-width;}
+@viewport {width: device-width;}
+
+* {
+	outline: none;
+	border: none;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background: #444;
+	color: #FFF;
+}
+
+.navbar-static-top {
+	margin-bottom: 19px;
+}
+
+.row {
+	padding-bottom: 30px;
+}
+
+.wrapper {
+	padding-bottom: 0;
+}
+
+.switch_label {
+	line-height: 34px;
+	font-size: 20px;
+}
+
+.no_line_height {
+	line-height: 0;
+}
+
+.container label {
+	margin: 0;
+}
+
+.motor_control {
+	padding: 3px 11px 0 12px;
+	margin-left: 15px;
+}
+
+.motor_control .glyphicon {
+	font-size: 22px;
+}
+
+[data-notify="progressbar"] {
+	margin-bottom: 0px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 5px;
+}
+
+.modal-dialog {
+	color: #444;
+}
+
+/* navbar button */
+@media (min-width: 768px) {
+	.navbar-collapse button {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+}
+
+@media (max-width: 767px) {
+	.navbar-collapse button {
+		margin-left: 15px;
+	}
+}
+
+/* Default colorpicker size */
+.jQWCP-wWidget {
+	height: 200px;
+}
+
+/* Responsive colorpicker size */
+@media (orientation:portrait) {
+	/* iPhone 5 */
+	@media (min-width: 320px) {
+		.colorpicker-size {
+			height: 200px;
+		}
+	}
+	
+	/* Galaxy S5 */
+	@media (min-width: 360px) {
+		.colorpicker-size {
+			height: 220px;
+		}
+	}
+	
+	/* iPhone 6 */
+	@media (min-width: 375px) {
+		.colorpicker-size {
+			height: 240px;
+		}
+	}
+	
+	/* Nexus 5/6 */
+	@media (min-width: 412px) {
+		.colorpicker-size {
+			height: 260px;
+		}
+	}
+	
+	/* iPhone 6 Plus */
+	@media (min-width: 414px) {
+		.colorpicker-size {
+			height: 280px;
+		}
+	}
+	
+	/* Responsive Small */
+	@media (min-width: 569px) {
+		.colorpicker-size {
+			height: 340px;
+		}
+	}
+	
+	/* iPad */
+	@media (min-width: 768px) {
+		.colorpicker-size {
+			height: 540px;
+		}
+	}
+}
+
+@media (orientation:landscape) {
+	/* iPhone 4 */
+	@media (min-width: 480px) {
+		.colorpicker-size {
+			height: 120px;
+		}
+	}
+	
+	/* iPhone 5 */
+	@media (min-width: 568px) {
+		.colorpicker-size {
+			height: 170px;
+		}
+	}
+	
+	/* Galaxy S5 */
+	@media (min-width: 640px) {
+		.colorpicker-size {
+			height: 190px;
+		}
+	}
+	
+	/* iPhone 6 */
+	@media (min-width: 667px) {
+		.colorpicker-size {
+			height: 200px;
+		}
+	}
+	
+	/* Nexus 5/6 */
+	@media (min-width: 732px) {
+		.colorpicker-size {
+			height: 230px;
+		}
+	}
+	
+	/* iPhone 6 Plus */
+	@media (min-width: 736px) {
+		.colorpicker-size {
+			height: 230px;
+		}
+	}
+	
+	/* iPad */
+	@media (min-width: 1024px) {
+		.colorpicker-size {
+			height: 320px;
+		}
+	}
+	
+	@media (max-width: 991px) {
+		.col-md-6 {
+			width: 50%;
+			float: left;
+		}
+		
+		.row:last-child {
+			padding-bottom: 0;
+		}
+	}
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+	.colorpicker-size {
+		height: 350px;
+	}
+}
