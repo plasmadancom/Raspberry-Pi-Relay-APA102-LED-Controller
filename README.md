@@ -73,7 +73,7 @@ In this example, the LED driver and halogen lighting circuits are linked to the 
 
 Notice in the example that the switched-line is looped back into the AC detect circuits. This is to allow the Raspberry Pi to sense when the lights / LED driver are powered, regardless of relay / switch positions. If you don't require 2-way control you can disable this in the config.
 
-## Installation
+# Installation
 
 ```
 sudo bash
@@ -86,7 +86,7 @@ apt-get update
 apt-get upgrade
 ```
 
-Install Apache components
+## Install Apache components
 
 ```
 apt-get install apache2 php5 libapache2-mod-php5
