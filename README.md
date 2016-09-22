@@ -62,7 +62,7 @@ The PCB design uses a 26-way header (same as the Raspberry Pi model B). A 26-way
 
 ## Wiring
 
-![alt tag](http://img.photobucket.com/albums/v287/plasma_dan/My%20Projects/Dads%20House/Living%20Room/2016-08-19%2016.07.03_zps45mc1tgi.jpg~original)
+![alt tag](http://img.photobucket.com/albums/v287/plasma_dan/My%20Projects/Dads%20House/Living%20Room/2016-08-19%2016.07.03_zps45mc1tgi.jpg)
 
 The controller is designed to work with 4-wire type addressable LED strips; such as APA102 (AKA Adafruit DotStars) or WS2801. Everything else on the controller is pretty-much universal in terms of wiring options. I have provided an example wiring diagram:
 
