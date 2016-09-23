@@ -57,7 +57,7 @@ $lux = end($color);
 		
 		<!-- App theme color -->
 		<meta name="theme-color" content="#444444">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/bootstrap-toggle.min.css">
 		<link rel="stylesheet" href="/css/animate.min.css">
 		<link rel="stylesheet" href="/css/style.css">
