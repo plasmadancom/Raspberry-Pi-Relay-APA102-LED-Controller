@@ -51,7 +51,7 @@ The hardware for this controller is quite simple, all the components are readily
 
 Parts list: https://goo.gl/5SdG7h
 
-Alternatively you can buy a PCB or complete controller from myself. Contact me on AV Forums [here](https://www.avforums.com/members/plasma-dan.314603/).
+Alternatively you can buy a PCB or complete controller from me. Contact me on AV Forums [here](https://www.avforums.com/members/plasma-dan.314603/).
 
 ## Just The Basics
 
