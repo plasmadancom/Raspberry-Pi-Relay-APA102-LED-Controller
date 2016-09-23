@@ -123,7 +123,7 @@ preset_idx = 0
 
 # Preset colors (R/G/B) / effect
 # Supports RGB or 24-bit color format
-# Don't put two of the color / effect or you'll mess-up the indexing
+# Don't put two of the same color / effect or you'll mess-up the indexing
 preset = [
 	'rainbow',                            # RGB color wheel (static)
 #	'rainbowrotate',                      # Rotating RGB color wheel (EXPERIMENTAL)
