@@ -53,7 +53,7 @@ Parts list: https://goo.gl/5SdG7h
 
 ## Just The Basics
 
-If all you want is LED control via Raspberry Pi, you can do this without a PCB. The circuit diagram below shows how to connect APA102 LEDs to a Raspberry Pi using a [74AHCT125 - Quad Level-Shifter](https://www.adafruit.com/product/1787). You will still need an LED driver to power the LEDs. The LEDs must share a common-ground with the Raspberry Pi & LED Driver.
+If all you want is LED control via Raspberry Pi, you can do this without a PCB. The circuit diagram below shows how to connect APA102 LEDs to a Raspberry Pi using a [74AHCT125 - Quad Level-Shifter](https://www.adafruit.com/product/1787). You will still need an LED driver to power the LEDs. The LEDs must share a common-ground with the Raspberry Pi & LED driver.
 
 ![alt tag](/apa102-raspberry-pi-circuit-diagram.png)
 
