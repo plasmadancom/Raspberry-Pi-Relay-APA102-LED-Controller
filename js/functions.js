@@ -40,27 +40,28 @@ var blue = $('#blue').val() ? parseInt($('#blue').val()) : 255;
 var lux = $('#lux').val() ? parseInt($('#lux').val()) : 128;
 
 // Language / fail-over
-var lang_success = $('#lang_success').val().length > 0 ? $('#lang_success').val() : 'Success!';
-var lang_warning = $('#lang_warning').val().length > 0 ? $('#lang_warning').val() : 'Warning!';
-var lang_error = $('#lang_error').val().length > 0 ? $('#lang_error').val() : 'Error!';
-var lang_ajax_error = $('#lang_ajax_error').val().length > 0 ? $('#lang_ajax_error').val() : 'AJAX response was null or empty!';
-var lang_ajax_invalid = $('#lang_ajax_invalid').val().length > 0 ? $('#lang_ajax_invalid').val() : 'AJAX response was invalid!';
-var lang_ajax_missing = $('#lang_ajax_missing').val().length > 0 ? $('#lang_ajax_missing').val() : 'AJAX response is missing data!';
-var lang_setting = $('#lang_setting').val().length > 0 ? $('#lang_setting').val() : 'Setting';
-var lang_setting_color = $('#lang_setting_color').val().length > 0 ? $('#lang_setting_color').val() : 'Color';
-var lang_setting_brightness = $('#lang_setting_brightness').val().length > 0 ? $('#lang_setting_brightness').val() : 'Brightness';
-var lang_set_color_mismatch = $('#lang_set_color_mismatch').val().length > 0 ? $('#lang_set_color_mismatch').val() : 'Set color did not match requested color! Result';
-var lang_set_brightness_mismatch = $('#lang_set_brightness_mismatch').val().length > 0 ? $('#lang_set_brightness_mismatch').val() : 'Set brightness did not match requested brightness! Result';
-var lang_switching = $('#lang_switching').val().length > 0 ? $('#lang_switching').val() : 'Switching';
-var lang_cycling = $('#lang_cycling').val().length > 0 ? $('#lang_cycling').val() : 'Cycling preset...';
-var lang_motor_up = $('#lang_motor_up').val().length > 0 ? $('#lang_motor_up').val() : 'up...';
-var lang_motor_down = $('#lang_motor_down').val().length > 0 ? $('#lang_motor_down').val() : 'down...';
-var lang_motor_toggle = $('#lang_motor_toggle').val().length > 0 ? $('#lang_motor_toggle').val() : 'Toggle motor';
-var lang_rebooting = $('#lang_rebooting').val().length > 0 ? $('#lang_rebooting').val() : 'Rebooting controller...';
-var lang_rebooting_inprogress = $('#lang_rebooting_inprogress').val().length > 0 ? $('#lang_rebooting_inprogress').val() : 'Controller reboot in progress...';
-var lang_rebooting_slow = $('#lang_rebooting_slow').val().length > 0 ? $('#lang_rebooting_slow').val() : 'Taking longer than expected...';
-var lang_rebooting_error = $('#lang_rebooting_error').val().length > 0 ? $('#lang_rebooting_error').val() : 'Please check the controller!';
-var lang_rebooting_done = $('#lang_rebooting_done').val().length > 0 ? $('#lang_rebooting_done').val() : 'Controller online!';
+var lang_success = $('#lang_success').length > 0 ? $('#lang_success').val() : 'Success!';
+var lang_warning = $('#lang_warning').length > 0 ? $('#lang_warning').val() : 'Warning!';
+var lang_error = $('#lang_error').length > 0 ? $('#lang_error').val() : 'Error!';
+var lang_ajax_error = $('#lang_ajax_error').length > 0 ? $('#lang_ajax_error').val() : 'AJAX response was null or empty!';
+var lang_ajax_invalid = $('#lang_ajax_invalid').length > 0 ? $('#lang_ajax_invalid').val() : 'AJAX response was invalid!';
+var lang_ajax_missing = $('#lang_ajax_missing').length > 0 ? $('#lang_ajax_missing').val() : 'AJAX response is missing data!';
+var lang_setting = $('#lang_setting').length > 0 ? $('#lang_setting').val() : 'Setting';
+var lang_setting_color = $('#lang_setting_color').length > 0 ? $('#lang_setting_color').val() : 'Color';
+var lang_setting_brightness = $('#lang_setting_brightness').length > 0 ? $('#lang_setting_brightness').val() : 'Brightness';
+var lang_set_color_mismatch = $('#lang_set_color_mismatch').length > 0 ? $('#lang_set_color_mismatch').val() : 'Set color did not match requested color! Result';
+var lang_set_brightness_mismatch = $('#lang_set_brightness_mismatch').length > 0 ? $('#lang_set_brightness_mismatch').val() : 'Set brightness did not match requested brightness! Result';
+var lang_switching = $('#lang_switching').length > 0 ? $('#lang_switching').val() : 'Switching';
+var lang_cycling = $('#lang_cycling').length > 0 ? $('#lang_cycling').val() : 'Cycling preset...';
+var lang_motor_up = $('#lang_motor_up').length > 0 ? $('#lang_motor_up').val() : 'up...';
+var lang_motor_down = $('#lang_motor_down').length > 0 ? $('#lang_motor_down').val() : 'down...';
+var lang_motor_toggle = $('#lang_motor_toggle').length > 0 ? $('#lang_motor_toggle').val() : 'Toggle motor';
+var lang_reboot = $('#lang_reboot').length > 0 ? $('#lang_reboot').val() : 'Reboot the controller?';
+var lang_rebooting = $('#lang_rebooting').length > 0 ? $('#lang_rebooting').val() : 'Rebooting controller...';
+var lang_rebooting_inprogress = $('#lang_rebooting_inprogress').length > 0 ? $('#lang_rebooting_inprogress').val() : 'Controller reboot in progress...';
+var lang_rebooting_slow = $('#lang_rebooting_slow').length > 0 ? $('#lang_rebooting_slow').val() : 'Taking longer than expected...';
+var lang_rebooting_error = $('#lang_rebooting_error').length > 0 ? $('#lang_rebooting_error').val() : 'Please check the controller!';
+var lang_rebooting_done = $('#lang_rebooting_done').length > 0 ? $('#lang_rebooting_done').val() : 'Controller online!';
 
 // On first load
 $(document).ready(function() {
@@ -688,7 +689,7 @@ $('.motor_control').on('click', function(e) {
 // System Reset
 $('#system_reset').on('click', function() {
 	bootbox.dialog({
-		message: 'Reboot the controller?',
+		message: lang_reboot,
 		buttons: {
 			danger: {
 				label: 'Reboot',
