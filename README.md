@@ -1,5 +1,7 @@
 # Raspberry Pi Relay & APA102 LED Controller
 
+![alt tag](http://img.photobucket.com/albums/v287/plasma_dan/responsive-showcase-mockup_zpsqssh3wjo.png~original)
+
 ![alt tag](/pcb-animated.gif)
 
 Raspberry Pi Relay & APA102 LED controller allows control & switching of APA102 addressable LEDs (and LED driver) using a web GUI. Motor controller functionality is also built-in to control hard-wired home automation type blind / projector screen motors. Ideal for use in home cinema applications.
