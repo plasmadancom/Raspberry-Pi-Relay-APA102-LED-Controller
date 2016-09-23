@@ -47,6 +47,12 @@ https://github.com/adafruit/Adafruit_DotStar_Pi
 
 The hardware for this controller is quite simple, all the components are readily available. If you decide to build one for yourself, I have provided the necessary Gerber files for the PCB. These can either be sent to a PCB manufacturer like [PCBway](http://www.pcbway.com), or you can etch the board yourself (see included transfer pdf). The PCB design is single-sided to make it easier to re-create yourself. The PCB was designed to fit into a small case ([CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75)). If you require additional inputs / outputs, or want to make any other changes; you may want to create your own PCB instead.
 
+## Just The Basics
+
+![alt tag](/apa102-raspberry-pi-circuit-diagram.png)
+
+If all you want is LED control via Raspberry Pi, you can do this without a PCB. The circuit diagram above shows how to connect APA102 LEDs to a Raspberry Pi using a [74AHCT125 - Quad Level-Shifter](https://www.adafruit.com/product/1787).
+
 ![alt tag](/pcb-black-transfer.png)
 
 Parts list: https://goo.gl/5SdG7h
