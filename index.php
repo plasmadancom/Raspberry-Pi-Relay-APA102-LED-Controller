@@ -108,6 +108,7 @@ $lux = end($color);
 		<input id="lang_motor_up" type="hidden" value="<?php echo $lang_motor_up; ?>">
 		<input id="lang_motor_down" type="hidden" value="<?php echo $lang_motor_down; ?>">
 		<input id="lang_motor_toggle" type="hidden" value="<?php echo $lang_motor_toggle; ?>">
+		<input id="lang_reboot" type="hidden" value="<?php echo $lang_reboot; ?>">
 		<input id="lang_rebooting" type="hidden" value="<?php echo $lang_rebooting; ?>">
 		<input id="lang_rebooting_inprogress" type="hidden" value="<?php echo $lang_rebooting_inprogress; ?>">
 		<input id="lang_rebooting_slow" type="hidden" value="<?php echo $lang_rebooting_slow; ?>">
