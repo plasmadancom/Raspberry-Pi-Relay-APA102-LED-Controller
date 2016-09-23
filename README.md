@@ -39,7 +39,7 @@ I recommend a clean Raspian install before proceeding.
 
 ## Dependencies
 
-APA102 LEDs require the Python port of the Adafruit dotstar library to function. This is included in this repo for completeness.
+APA102 LEDs require the Python port of the Adafruit DotStar library to function. This is included in this repo for completeness.
 
 https://github.com/adafruit/Adafruit_DotStar_Pi
 
@@ -53,9 +53,9 @@ Parts list: https://goo.gl/5SdG7h
 
 ## Just The Basics
 
-![alt tag](/apa102-raspberry-pi-circuit-diagram.png)
+If all you want is LED control via Raspberry Pi, you can do this without a PCB. The circuit diagram below shows how to connect APA102 LEDs to a Raspberry Pi using a [74AHCT125 - Quad Level-Shifter](https://www.adafruit.com/product/1787). You will still need an LED driver to power the LEDs. The LEDs must share a common-ground with the Raspberry Pi & LED Driver.
 
-If all you want is LED control via Raspberry Pi, you can do this without a PCB. The circuit diagram above shows how to connect APA102 LEDs to a Raspberry Pi using a [74AHCT125 - Quad Level-Shifter](https://www.adafruit.com/product/1787). You will still need an LED driver to power the LEDs. The LEDs must share a common-ground with the Raspberry Pi & LED Driver.
+![alt tag](/apa102-raspberry-pi-circuit-diagram.png)
 
 ## Stackable
 
