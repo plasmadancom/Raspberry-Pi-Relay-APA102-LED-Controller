@@ -51,6 +51,8 @@ The hardware for this controller is quite simple, all the components are readily
 
 Parts list: https://goo.gl/5SdG7h
 
+Alternatively you can buy a PCB or complete controller from myself. Contact me on AV Forums [here](https://www.avforums.com/members/plasma-dan.314603/).
+
 ## Just The Basics
 
 If all you want is LED control via Raspberry Pi, you can do this without a PCB. The circuit diagram below shows how to connect APA102 LEDs to a Raspberry Pi using a [74AHCT125 - Quad Level-Shifter](https://www.adafruit.com/product/1787). You will still need an LED driver to power the LEDs. The LEDs must share a common-ground with the Raspberry Pi & LED driver.
