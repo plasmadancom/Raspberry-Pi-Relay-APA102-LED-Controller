@@ -57,7 +57,7 @@ $lux = end($color);
 		
 		<!-- App theme color -->
 		<meta name="theme-color" content="#444444">
-		<link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/bootstrap-toggle.min.css">
 		<link rel="stylesheet" href="/css/animate.min.css">
 		<link rel="stylesheet" href="/css/style.css">
@@ -109,6 +109,7 @@ $lux = end($color);
 		<input id="lang_motor_down" type="hidden" value="<?php echo $lang_motor_down; ?>">
 		<input id="lang_motor_toggle" type="hidden" value="<?php echo $lang_motor_toggle; ?>">
 		<input id="lang_reboot" type="hidden" value="<?php echo $lang_reboot; ?>">
+		<input id="lang_cancel" type="hidden" value="<?php echo $lang_cancel; ?>">
 		<input id="lang_rebooting" type="hidden" value="<?php echo $lang_rebooting; ?>">
 		<input id="lang_rebooting_inprogress" type="hidden" value="<?php echo $lang_rebooting_inprogress; ?>">
 		<input id="lang_rebooting_slow" type="hidden" value="<?php echo $lang_rebooting_slow; ?>">
@@ -175,8 +176,8 @@ if ($enable_motor_control) {
 							<span class="switch_label"><?php echo $motor_label; ?></span>
 						</div>
 						<div class="col-xs-8 text-right">
-							<button type="button" data-motor_channel="1" class="btn btn-primary motor_control"><span class="glyphicon glyphicon-chevron-up"></span></button>
-							<button type="button" data-motor_channel="2" class="btn btn-primary motor_control"><span class="glyphicon glyphicon-chevron-down"></span></button>
+							<button type="button" data-motor_channel="1" class="btn btn-primary motor_control btn-spacing"><span class="glyphicon glyphicon-chevron-up"></span></button>
+							<button type="button" data-motor_channel="2" class="btn btn-primary motor_control btn-spacing"><span class="glyphicon glyphicon-chevron-down"></span></button>
 						</div>
 					</div>
 <?php
