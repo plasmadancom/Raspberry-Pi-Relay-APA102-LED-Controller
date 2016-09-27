@@ -57,11 +57,13 @@ var lang_motor_up = $('#lang_motor_up').length > 0 ? $('#lang_motor_up').val() :
 var lang_motor_down = $('#lang_motor_down').length > 0 ? $('#lang_motor_down').val() : 'down...';
 var lang_motor_toggle = $('#lang_motor_toggle').length > 0 ? $('#lang_motor_toggle').val() : 'Toggle motor';
 var lang_reboot = $('#lang_reboot').length > 0 ? $('#lang_reboot').val() : 'Reboot the controller?';
+var lang_cancel = $('#lang_cancel').length > 0 ? $('#lang_cancel').val() : 'Cancel';
 var lang_rebooting = $('#lang_rebooting').length > 0 ? $('#lang_rebooting').val() : 'Rebooting controller...';
 var lang_rebooting_inprogress = $('#lang_rebooting_inprogress').length > 0 ? $('#lang_rebooting_inprogress').val() : 'Controller reboot in progress...';
 var lang_rebooting_slow = $('#lang_rebooting_slow').length > 0 ? $('#lang_rebooting_slow').val() : 'Taking longer than expected...';
 var lang_rebooting_error = $('#lang_rebooting_error').length > 0 ? $('#lang_rebooting_error').val() : 'Please check the controller!';
 var lang_rebooting_done = $('#lang_rebooting_done').length > 0 ? $('#lang_rebooting_done').val() : 'Controller online!';
+var reboot_label = $('#system_reset').length > 0 ? $('#system_reset').text() : 'Reboot';
 
 // On first load
 $(document).ready(function() {
@@ -692,7 +694,7 @@ $('#system_reset').on('click', function() {
 		message: lang_reboot,
 		buttons: {
 			danger: {
-				label: 'Reboot',
+				label: reboot_label,
 				className: 'btn-danger',
 				callback: function() {
 					haltupdate = true;
@@ -772,7 +774,7 @@ $('#system_reset').on('click', function() {
 				}
 			},
 			main: {
-				label: 'Cancel',
+				label: lang_cancel,
 				className: 'btn-default',
 				callback: function() {}
 			}
