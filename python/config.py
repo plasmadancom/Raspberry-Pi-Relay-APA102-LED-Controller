@@ -21,40 +21,13 @@
 # -----------------------------------------------------------------------------
 
 
-# Web GUI language
+# Web GUI labels
 title = 'Light Controller'                # Web GUI title
 relay_ch1_label = 'LEDS'                  # Relay channel 1 label
 relay_ch2_label = 'SPOTLIGHTS'            # Relay channel 2 label
 motor_label = 'BLIND'                     # Motor control label
 preset_label = 'PRESET'                   # Preset button label
 reboot_label = 'Reboot'                   # Reboot button label
-
-lang_success = 'Done!'
-lang_warning = 'Warning!'
-lang_error = 'Error!'
-lang_ac_detect_error = 'LED driver not powered!'
-lang_ajax_error = 'AJAX response was null or empty!'
-lang_ajax_invalid = 'AJAX response was invalid!'
-lang_ajax_missing = 'AJAX response is missing data!'
-lang_setting = 'Setting'
-lang_setting_color = 'Color'
-lang_setting_brightness = 'Brightness'
-lang_set_color_mismatch = 'Set color did not match requested color! Result'
-lang_set_brightness_mismatch = 'Set brightness did not match requested brightness! Result'
-lang_switching = 'Switching'
-lang_cycling = 'Cycling preset...'
-lang_motor_up = 'up...'
-lang_motor_down = 'down...'
-lang_motor_toggle = 'Toggle motor'
-lang_reboot = 'Reboot the controller?'
-lang_rebooting = 'Rebooting controller...'
-lang_rebooting_inprogress = 'Controller reboot in progress...'
-lang_rebooting_slow = 'Taking longer than expected...'
-lang_rebooting_error = 'Please check the controller!'
-lang_rebooting_done = 'Controller online!'
-lang_invalid_color_data = 'Incorrect or partially missing color data'
-lang_valid_colors = 'Valid color formats'
-lang_invalid_file = 'File data invalid, returned length'
 
 # Web GUI settings
 enable_relay_ch2 = 1                      # Enable / disable relay channel 2
@@ -103,7 +76,7 @@ lux_enable = 1                            # Enable / disable brightness cycle. W
 lux_steps = 4                             # Steps to count when creating brightness levels, lower steps means smoother transition (1 - 25)
 lux_delay = 0.05                          # Delay when cyclying through brightness levels (seconds)
 lux_lowest = 10                           # Lowest permissible brightness level (0 - 255)
-lux_highest = 255                         # Highest permissible brightness level (1 - 255)
+lux_highest = 200                         # Highest permissible brightness level (1 - 255)
 fade_dir = 0                              # Fade up / down initial direction
 save_caching = 0                          # Enable / disable caching of color & brightness to in-memory SQLite database (EXPERIMENTAL)
 save_to_file = 1                          # Enable / disable saving of color & brightness to file
@@ -128,12 +101,54 @@ preset_idx = 0
 preset = [
 	'rainbow',                            # RGB color wheel (static)
 #	'rainbowrotate',                      # Rotating RGB color wheel (EXPERIMENTAL)
-	[255, 255, 255],                      # White
 	[255, 0, 0],                          # Pure Red
 	[255, 50, 0],                         # Orange
 	[255, 255, 0],                        # Yellow
+	[255, 255, 255],                      # White
 	[0, 255, 0],                          # Green
 	[0, 255, 255],                        # Cyan
 	[0, 0, 255],                          # Pure Blue
 	[16711935]                            # Pink (24-bit example) same as [255, 0, 255]
 ]
+
+# Web GUI response language
+lang_success = 'Done!'
+lang_warning = 'Warning!'
+lang_error = 'Error!'
+lang_ajax_error = 'AJAX response was null or empty!'
+lang_ajax_invalid = 'AJAX response was invalid!'
+lang_ajax_missing = 'AJAX response is missing data!'
+lang_setting = 'Setting'
+lang_setting_color = 'Color'
+lang_setting_brightness = 'Brightness'
+lang_set_color_mismatch = 'Set color did not match requested color! Result'
+lang_set_brightness_mismatch = 'Set brightness did not match requested brightness! Result'
+lang_switching = 'Switching'
+lang_cycling = 'Cycling preset...'
+lang_motor_up = 'up...'
+lang_motor_down = 'down...'
+lang_motor_toggle = 'Toggle motor'
+lang_reboot = 'Reboot the controller?'
+lang_cancel = 'Cancel'
+lang_rebooting = 'Rebooting controller...'
+lang_rebooting_inprogress = 'Controller reboot in progress...'
+lang_rebooting_slow = 'Taking longer than expected...'
+lang_rebooting_error = 'Please check the controller!'
+lang_rebooting_done = 'Controller online!'
+
+# Python language
+lang_ac_detect_error = 'LED driver not powered!'
+lang_invalid_color_data = 'Incorrect or partially missing color data'
+lang_valid_colors = 'Valid color formats'
+lang_invalid_file = 'File data invalid, returned length'
+lang_preset = 'Preset'
+lang_not_implemented = 'is not implemented!'
+
+# PHP language
+lang_submit_data_missing = 'Colorpicker data missing!'
+lang_submit_data_invalid = 'Colorpicker array data invalid!'
+lang_submit_array_data_missing = 'Colorpicker array data missing!'
+lang_submit_erroneous_data = 'Erroneous data in colorpicker array!'
+lang_submit_array_data_invalid = 'Colorpicker array data received but was invalid!'
+lang_submit_failed_sanity_checks = 'Colorpicker array data received but failed sanity checks!'
+lang_functions_file_not_readable = 'is not readable! Check the file permissions.'
