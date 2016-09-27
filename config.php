@@ -37,7 +37,7 @@ $config_file = dirname(__FILE__) . '/python/config.py';
 
 // Verify file exists / permissions
 if (!file_exists($config_file) || !is_readable($config_file)) {
-	die($config_file . ' not found or is not readable!');
+	die($config_file . ' ' . $lang_config_not_readable);
 }
 
 // Read config file to array
@@ -48,7 +48,7 @@ foreach ($py_config as $line) {
 	$parsed = parse_config($line);
 	
 	// Set variable if found
-	if($parsed !== false) ${$parsed[0]} = $parsed[1];
+    if($parsed !== false) ${$parsed[0]} = $parsed[1];
 }
 
 ?>
