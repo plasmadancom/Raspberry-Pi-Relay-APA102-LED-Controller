@@ -77,7 +77,7 @@ function GetColor() {
 	if(!file_exists($color_file)) write_color_file($color_file, $fallback);
 	
 	// Check if color file is readable
-	if(!is_readable($color_file)) die($color_file . ' is not readable! Check the file permissions.');
+	if(!is_readable($color_file)) die($color_file . ' ' . $lang_functions_file_not_readable);
 	
 	// Get color from file
 	$color = read_color_file($color_file);
@@ -124,9 +124,9 @@ function write_buffer($pin) {
 	global $buffer_sleep;
 	
 	// Write high to GPIO, wait, reset
-	system("gpio write $pin 1");
+	system("gpio write " . $pin . " 1");
 	usleep($buffer_sleep);
-	system("gpio write $pin 0");
+	system("gpio write " . $pin . " 0");
 	
 	return 1;
 }
