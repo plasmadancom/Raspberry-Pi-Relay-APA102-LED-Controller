@@ -34,7 +34,7 @@ def presshold(pwr_cycle=0):
     
     sleep(hold_delay)                                        # Delay
     
-    if lux_enable and not wiringpi.digitalRead(button1):     # Still pressing? Adjust brightness!
+    if lux_enable and not wiringpi.digitalRead(button1):     # Still pressing? Adjust brightness!        
         col = GetColor()
         
         lux = []                                             # Create array of brightness levels to use
@@ -74,6 +74,12 @@ def presshold(pwr_cycle=0):
         col[-1] = lf
         
         SaveCol(col)
+        
+        idxs = GetPresetIndex()
+        curr_mode = preset[idxs[0]]                          # Select preset index from list
+        
+        if curr_mode == 'rainbowrotate':                     # Continue rotate
+            RainbowRotate(1)
     
     else:
         cyclePreset(pwr_cycle)
@@ -91,7 +97,7 @@ try:
                 presshold(1)                                 # Re-initialize strip
                 ac_status = 1
                 
-            if not wiringpi.digitalRead(button1) or wiringpi.digitalRead(buffer1):
+            if PollPreset():
                 if ac_status:
                     presshold()
                 
@@ -107,7 +113,7 @@ try:
                 ac_status = 0
     else:
         while True:                                          # Loop forever
-            if not wiringpi.digitalRead(button1) or wiringpi.digitalRead(buffer1):
+            if PollPreset():
                 presshold()
 
 finally:
