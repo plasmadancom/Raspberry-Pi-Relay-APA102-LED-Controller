@@ -85,14 +85,14 @@ else if (isset($_POST['system_reset'])) {
 
 // RGB color
 else if (! isset($_POST['color'])) {
-	$result[] = "{'error' : 'Colorpicker data missing!'}";
+	$result['error'] = $lang_submit_data_missing;
 }
 
 ### COLORPICKER
 
 // Confirm color data is array
 else if (! is_array($_POST['color'])) {
-	$result[] = "{'error' : 'Colorpicker array data invalid!'}";
+	$result['error'] = $lang_submit_data_invalid;
 }
 
 // Confirm required values are present
@@ -102,12 +102,12 @@ else if (! ((isset($_POST['color'][0]) && count($_POST['color'] == 1)) || (
 			isset($_POST['color'][2]) && 
 			isset($_POST['color'][3])
 		))) {
-	$result['error'] = 'Colorpicker array data missing!';
+	$result['error'] = $lang_submit_array_data_missing;
 }
 
 // Confirm no erroneous data present
 else if (! (count($_POST['color'] == 1) || count($_POST['color'] == 4))) {
-	$result['error'] = 'Erroneous data in colorpicker array!';
+	$result['error'] = $lang_submit_erroneous_data;
 }
 
 // Validate
@@ -118,7 +118,7 @@ else if (! ((count($_POST['color']) == 1 && is_numeric($_POST['color'][0])) || (
 			is_numeric($_POST['color'][2]) && 
 			is_numeric($_POST['color'][3])
 		))) {
-	$result['error'] = 'Colorpicker array data received but was invalid!';
+	$result['error'] = $lang_submit_array_data_invalid;
 }
 
 // Sanity check
@@ -129,7 +129,7 @@ else if (! ((count($_POST['color']) == 1 && $lux_lowest <= $_POST['color'][0] &&
 			0 <= $_POST['color'][2] && $_POST['color'][2] <= 255 && 
 			$lux_lowest <= $_POST['color'][3] && $_POST['color'][3] <= $lux_highest
 		))) {
-	$result['error'] = 'Colorpicker array data received but failed sanity checks!';
+	$result['error'] = $lang_submit_failed_sanity_checks;
 }
 
 else {
