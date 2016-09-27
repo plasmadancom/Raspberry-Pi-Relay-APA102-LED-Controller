@@ -22,12 +22,12 @@
 
 
 # Import dependancies
-#import subprocess, cPickle, sqlite3
-import subprocess, cPickle
+#import cPickle, sqlite3
 
 from time import sleep
 from bisect import bisect_left
 from config import *
+from io import *
 from strip import *
 
 # SQLite in-memorty database connection (EXPERIMENTAL)
@@ -36,6 +36,11 @@ if save_caching:
     database = sqlite3.connect("file:colcache1?mode=memory&cache=shared")
 
 pixel_cache = []
+rainbow_last_step = 0
+
+# Poll preset button press
+def PollPreset():
+    return (not wiringpi.digitalRead(button1) or wiringpi.digitalRead(buffer1))
 
 # Return one 24-bit color value 
 def rgbToColor(r, g, b):
@@ -397,16 +402,16 @@ def fadeBrightness(lux, cache=1, save_off=0):
 
 # Return color from wheel position
 def ColorWheel(pos):
-    if pos > 254: pos = 254                                  # Safeguard
+    if pos > 254: pos = 254                                  # Limit
     
-    if pos < 85:                                             # Green -> Red
+    if pos < 85:                                             # Green - Red
         return rgbToColor(pos * 3, 255 - pos * 3, 0)
     
-    elif pos < 170:                                          # Red -> Blue
+    elif pos < 170:                                          # Red - Blue
         pos -= 85
         return rgbToColor(255 - pos * 3, 0, pos * 3)
     
-    else:                                                    # Blue -> Green
+    else:                                                    # Blue - Green
         pos -= 170
         return rgbToColor(0, pos * 3, 255 - pos * 3);
 
@@ -414,9 +419,7 @@ def ColorWheel(pos):
 def Rainbow(wipe=0, save_off=0):
     lux = validateBrightness(GetColor()[-1])                 # Get color from file / database
     
-    steps = 255                                              # Steps per cycle
     scale = 255.0 / numpixels                                # Index change between each LED
-    
     rainbow_index = scale * rainbow_start                    # Starting position of rainbow effect (allows more control over colors)
     
     strip.setBrightness(lux)                                 # Set brightness level
@@ -424,12 +427,12 @@ def Rainbow(wipe=0, save_off=0):
     colors = [None] * numpixels                              # Create list of indexes
     
     for i in range(numpixels):
-        start = (i + shift_pixels) % numpixels               # Shift LED start position by shift_pixels
-        
         ledIndex = rainbow_index + i * scale                 # Index of LED i, not rounded / wrapped at 255
         wrapped = int(round(ledIndex, 0)) % 255              # Rounded and wrapped
         
         color = ColorWheel(wrapped)                          # Get the combined color out of the wheel
+        
+        start = (i + shift_pixels) % numpixels               # Shift LED start position by shift_pixels
         
         colors[start] = color
         strip.setPixelColor(start, color)
@@ -443,6 +446,65 @@ def Rainbow(wipe=0, save_off=0):
         strip.show()
     
     colors.append('rainbow')                                 # Store the effect name at index -2
+    colors.append(lux)
+    
+    SaveCol(colors, save_off)
+
+# Rainbow rotate effect
+def RainbowRotate(cont=0, save_off=0):
+    global rainbow_last_step
+    
+    if not cont:
+        rainbow_last_step = 0                                # Reset to start
+    
+    lux = validateBrightness(GetColor()[-1])                 # Get color from file / database
+    
+    steps = 255                                              # Steps per cycle
+    scale = 255.0 / numpixels                                # Index change between each LED
+    rainbow_index = (scale * rainbow_start) + rainbow_last_step
+    
+    strip.setBrightness(lux)                                 # Set brightness level
+    
+    colors = [None] * numpixels                              # Create list of indexes
+    
+    def loop():
+        global rainbow_last_step
+        
+        old_rainbow_last_step = rainbow_last_step
+        currentCycle = 0
+        
+        while True:                                          # Loop forever
+            if PollPreset():                                 # Poll GPIO
+                return
+            
+            for step in range (steps):
+                rainbow_last_step = (step + old_rainbow_last_step) % steps
+                
+                start_index = 255 / steps * (step + rainbow_index)
+                
+                for i in range(numpixels):
+                    if PollPreset():                         # Poll GPIO again
+                        return
+                    
+                    ledIndex = start_index + i * scale
+                    wrapped = int(round(ledIndex, 0)) % 255  # Rounded and wrapped
+                    
+                    color = ColorWheel(wrapped)              # Get the combined color out of the wheel
+                    
+                    start = (i + shift_pixels) % numpixels   # Shift LED start position by shift_pixels
+                    
+                    colors[start] = color
+                    strip.setPixelColor(start, color)
+                    
+                    CachePixel(start, color)
+                
+                strip.show()
+            
+            currentCycle += 1
+    
+    loop()
+    
+    colors.append('rainbowrotate')                           # Store the effect name at index -2
     colors.append(lux)
     
     SaveCol(colors, save_off)
@@ -510,24 +572,15 @@ def cyclePreset(pwr_cycle=0, jump=0):
     curr_mode = preset[idxs[0]]                              # Select preset index from list
     next_mode = preset[idxs[1]]                              # Select preset index from list
     
-    ###### EXPERIMENTAL
-    '''try:
-        RRot.terminate()
-    
-    except Exception:
-        pass
-    
-    if next_mode == 'rainbowrotate':                         # Dirty way to add a custom effect
+    if next_mode == 'rainbowrotate':                         # Rainbow rotate effect
         Rainbow(not pwr_cycle and wipe_effects)
-        RRot = subprocess.Popen(['python', 'rainbow_rotate.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    '''
-    ######
+        RainbowRotate()
     
-    if next_mode == 'rainbow':                               # Rainbow effect
+    elif next_mode == 'rainbow':                             # Rainbow effect
         Rainbow(not pwr_cycle and wipe_effects)
     
     elif isinstance(next_mode, basestring):                  # Preset is an effect, but isn't implemented!
-        print "Preset '%s' is not implemented!" % next_mode
+        print ("{0} '{1}' {2}".format(lang_preset, next_mode, lang_not_implemented))
         
         cyclePreset(pwr_cycle, idxs[1])                      # Start again at next index...
     
