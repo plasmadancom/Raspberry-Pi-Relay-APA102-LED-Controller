@@ -76,7 +76,7 @@ lux_enable = 1                            # Enable / disable brightness cycle. W
 lux_steps = 4                             # Steps to count when creating brightness levels, lower steps means smoother transition (1 - 25)
 lux_delay = 0.05                          # Delay when cyclying through brightness levels (seconds)
 lux_lowest = 10                           # Lowest permissible brightness level (0 - 255)
-lux_highest = 200                         # Highest permissible brightness level (1 - 255)
+lux_highest = 255                         # Highest permissible brightness level (1 - 255)
 fade_dir = 0                              # Fade up / down initial direction
 save_caching = 0                          # Enable / disable caching of color & brightness to in-memory SQLite database (EXPERIMENTAL)
 save_to_file = 1                          # Enable / disable saving of color & brightness to file
@@ -86,7 +86,7 @@ backup_col = [255, 255, 255, 128]         # Backup if savefile error, list of 4 
 
 # Transitions / effects
 transition_effect = 'fade'                # fade / wipe / 0 (none)
-wipe_effects = 0                          # Cannot use color fade when transitioning to / from an effect, use (1) to use wipe instead, or (0) to skip
+wipe_effects = 1                          # Cannot use color fade when transitioning to / from an effect, use (1) to use wipe instead, or (0) to skip
 shift_pixels = 0                          # Shift position of LED 1 for use with transition effects (+/-)
 color_fade_steps = 16                     # Steps when fading between colors
 color_fade_delay = 0.02                   # Delay between each color fade step (seconds)
