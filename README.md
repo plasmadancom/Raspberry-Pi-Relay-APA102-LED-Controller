@@ -1,10 +1,10 @@
 # Raspberry Pi Relay & APA102 LED Controller
 
-![alt tag](http://img.photobucket.com/albums/v287/plasma_dan/responsive-showcase-mockup_zpsqssh3wjo.png~original)
+![APA102 LED Controller Responsive Web GUI Mockup](http://img.photobucket.com/albums/v287/plasma_dan/responsive-showcase-mockup_zpsqssh3wjo.png~original)
 
-![alt tag](/pcb-animated.gif)
+Raspberry Pi Relay & APA102 LED controller allows control & switching of APA102 addressable LED strips (and LED driver) using a web GUI. Motor controller functionality is also built-in to control hard-wired home automation type blind / projector screen motors. Ideal for use in home cinema applications. Unlike regular "dumb" RGB strips, addressable strips have independently controlled LEDs, allowing for the creation of light effects & sequences.
 
-Raspberry Pi Relay & APA102 LED controller allows control & switching of APA102 addressable LEDs (and LED driver) using a web GUI. Motor controller functionality is also built-in to control hard-wired home automation type blind / projector screen motors. Ideal for use in home cinema applications.
+[![Home Cinema Rainbow Rotate RGB LED Effect](http://img.photobucket.com/albums/v287/plasma_dan/2016-10-04%2002.57.49_zpsnyoocye7.jpg~original)](https://www.youtube.com/watch?v=rt4a6Lg4dxs "Addressable APA102 - Home Cinema RGB LED Lighting - Rainbow Rotate Effect")
 
 ## Features
 
@@ -22,7 +22,7 @@ Home cinema build log: https://www.avforums.com/threads/ongoing-plasmadans-livin
 
 ## Responsive Web GUI
 
-![alt tag](http://img.photobucket.com/albums/v287/plasma_dan/iphone6-mockup_zpsm93mbcdt.png~original)
+![APA102 LED Controller iPhone6 Web GUI Mockup](http://img.photobucket.com/albums/v287/plasma_dan/iphone6-mockup_zpsm93mbcdt.png~original)
 
 The GUI includes controls for the changeover relay channels, motorised blind / projector screen, a full RGB color picker for the APA102 LEDs and a preset control to cycle built-in light modes / effects. There is also the ability to reboot the Raspberry Pi directly from the GUI, making development & testing easier for your application.
 
@@ -47,9 +47,11 @@ https://github.com/adafruit/Adafruit_DotStar_Pi
 
 ## Build Your Own!
 
+![APA102 LED Controller PCB Animated](/pcb-animated.gif)
+
 The hardware for this controller is quite simple, all the components are readily available. If you decide to build one for yourself, I have provided the necessary Gerber files for the PCB. These can either be sent to a PCB manufacturer like [PCBway](http://www.pcbway.com), or you can etch the board yourself (see included transfer pdf). The PCB design is single-sided to make it easier to re-create yourself. The PCB was designed to fit into a small case ([CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75)). If you require additional inputs / outputs, or want to make any other changes; you may want to create your own PCB instead.
 
-![alt tag](/pcb-black-transfer.png)
+![APA102 LED Controller PCB Transfer](/pcb-black-transfer.png)
 
 Parts list: https://goo.gl/5SdG7h
 
@@ -59,7 +61,7 @@ Alternatively you can buy a PCB or complete controller from me. Contact me on AV
 
 If all you want is LED control via Raspberry Pi, you can do this without a PCB. The circuit diagram below shows how to connect APA102 LEDs to a Raspberry Pi using a [74AHCT125 - Quad Level-Shifter](https://www.adafruit.com/product/1787). You will still need an LED driver to power the LEDs. The LEDs must share a common-ground with the Raspberry Pi & LED driver.
 
-![alt tag](/apa102-raspberry-pi-circuit-diagram.png)
+![APA102 LED Quad Level-Shifter Circuit Diagram](/apa102-raspberry-pi-circuit-diagram.png)
 
 ## Stackable
 
@@ -73,11 +75,11 @@ The PCB design uses a 26-way header (same as the Raspberry Pi model B). A 26-way
 
 ## Wiring
 
-![alt tag](http://img.photobucket.com/albums/v287/plasma_dan/My%20Projects/Dads%20House/Living%20Room/2016-08-19%2016.07.03_zps45mc1tgi.jpg)
+![APA102 LED Controller Wired](http://img.photobucket.com/albums/v287/plasma_dan/My%20Projects/Dads%20House/Living%20Room/2016-08-19%2016.07.03_zps45mc1tgi.jpg)
 
 The controller is designed to work with 4-wire type addressable LED strips; such as APA102 (AKA Adafruit DotStars) or WS2801. Everything else on the controller is pretty-much universal in terms of wiring options. I have provided an example wiring diagram:
 
-![alt tag](/example-wiring-diagram-v2.png)
+![APA102 LED Controller Wiring Diagram Example](/example-wiring-diagram-v2.png)
 
 In this example, the LED driver and halogen lighting circuits are linked to the changeover relay channels. This allows for standard 2-way / intermediate (3-way if you're outside the UK) light switches to be used in conjunction with the controller. This means that if the controller went offline for whatever reason, your lights will still work!
 
