@@ -32,6 +32,12 @@ Built on bootstrap 3; the GUI is fully responsive and adapts to any screen size 
 
 As well as support for mobile devices, the GUI includes modern manifest data to allow it to work more like a native app. This means when you save the GUI to the home-screen it will load & function without an address-bar, just like an app.
 
+## Chrome Extension
+
+The specially created Chrome extension makes the web GUI even easier to use on desktop, allowing for GUI control without the need to leave the current web page. The Chrome extension also provides the ability to map keyboard shortcuts to each function of the web GUI,  including toggle on / off, LED preset & blind control.
+
+https://chrome.google.com/webstore/detail/apa102-led-controller/jnmjhaaahpdapgcddlgaldjhapmoapje
+
 ## Prerequisites
 
 Raspberry Pi with Raspian:
