@@ -31,7 +31,12 @@ from config import *
 from io import *
 
 motor_direction = 1 if swap_motor_direction else 0           # motor_direction = 1 should always be UP, even if swapped
-position = 0
+motor_steps = int(motor_timer * 20)
+motor_pos = 0
+auto_limit = 0
+
+if motor_auto_up_limit > 0:
+    auto_limit = int(max(0, (motor_steps / 100) * motor_auto_up_limit))
 
 def stop(swap=1):
     global motor_direction
@@ -42,50 +47,55 @@ def stop(swap=1):
     if swap:
         motor_direction = not motor_direction                # Swap motor motor_direction
 
+def position(u):
+    global motor_pos
+    
+    if u == 0:
+        motor_pos = 0                                        # Reset
+    
+    else:
+        motor_pos = max(min(motor_steps, motor_pos + u), 0)  # Clamp limits
+    
+    print motor_pos
+
 def presshold(going_up=0):
-    global position
+    if going_up:
+        position(int(motor_delay * 20))                      # Adjust for motor delay
+    
+    else:
+        position(-int(motor_delay * 20))
     
     if not wiringpi.digitalRead(button2):                    # Still pressing! Don't use timer
         while not wiringpi.digitalRead(button2):             # Re-check...
             sleep(0.05)
             
             if going_up:
-                position += 1
+                position(1)
             
             else:
-                position -= 1
-                
-                if position < 0:
-                    position = 0                             # Lower limit
+                position(-1)
     
     else:                                                    # Use timer
-        steps = motor_timer * 20
+        range_steps = motor_steps if going_up else int(motor_steps + motor_down_extended * 20)
         
-        auto_limit = 0
-        
-        if motor_auto_up_limit > 0:
-            auto_limit = max(0, (steps / 100) * motor_auto_up_limit)
-        
-        for i in range(steps):
+        for i in range(range_steps):
             sleep(0.05)
             
             if going_up:
-                position += 1
-                
-                if position > steps:
-                    position = steps                         # Upper limit
+                position(1)
             
             else:
-                position -= 1
-                
-                if position < 0:
-                    position = 0                             # Lower limit
+                position(-1)
             
-            if not wiringpi.digitalRead(button2) or wiringpi.digitalRead(buffer2) or wiringpi.digitalRead(buffer3) or wiringpi.digitalRead(buffer4) or (going_up and auto_limit and auto_limit == position):
+            if not wiringpi.digitalRead(button2) or wiringpi.digitalRead(buffer2) or wiringpi.digitalRead(buffer3) or wiringpi.digitalRead(buffer4) or (going_up and auto_limit and auto_limit == motor_pos):
                 break                                        # Interrupt timer
             
-            if not going_up and i == steps:
-                position = 0                                 # Reset timer
+            if i == range_steps:                             # Cycle complete
+                if going_up:
+                    position(i)                              # Upper limit
+                
+                else:
+                    position(0)                              # Reset position
 
 def start(relay=0, swap=1):
     if relay:

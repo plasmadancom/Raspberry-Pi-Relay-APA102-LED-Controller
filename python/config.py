@@ -49,13 +49,14 @@ off_at_startup = 1                        # Switch off circuits at startup, if a
 # Motor
 button2 = 6                               # Motor control input WiringPi port (6 - 7)
 button2_delay = 0.4                       # Prevent accidental double button2 presses with this delay (seconds)
-motor_timer = 25                          # Minimum time to complete one FULL blind cycle (seconds)
-motor_auto_up_limit = 70                  # Limit the automatic up cycle to stop the blind / shutter based on percetage of motor_timer, 0 to disable
+motor_timer = 25                          # Time to complete one FULL blind cycle (seconds), more accurate timing makes for better positioning
+motor_auto_up_limit = 80                  # Limit the automatic up cycle to stop the blind / shutter based on percetage of motor_timer, 0 to disable
 motor_pwr = 4                             # Main switching relay WiringPi port
 motor_relay = 5                           # Changeover relay WiringPi port
 swap_motor_direction = 0                  # Swap motor direction if wired backwards (0 or 1)
 motor_direction_delay = 0.2               # Wait before changing motor direction (seconds) - FOR SAFETY!!
 motor_delay = 0.5                         # Minimum time to run motor (seconds)
+motor_down_extended = 3                   # Extend the automatic down cycle to ensure a complete cycle (seconds), 0 to disable
 
 # Relays
 relay_1 = 3                               # Channel 1 relay WiringPi port
