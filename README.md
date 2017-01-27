@@ -237,7 +237,36 @@ service vsftpd restart
 ## Config
 
 There are lots of user customisable options in the config file :```/python/config.py```
-Edit the config options as required.
+
+You can customise everything from the GPIO channels used, the layout & language of the web GUI, lighting transition effects, preset modes, button timing and a whole lot more. Get familiar with the config file.
+
+## Automation
+
+To automate blind control actions there are 2 scripts included:
+
+```
+/python/motor_up.py
+/python/motor_down.py
+```
+
+These scripts simulate a button press for up & down actions. You can use crontab to automatically trigger these scripts at a time of your choosing.
+
+Run crontab with the -e flag to edit the cron table:
+
+```
+crontab -e
+```
+
+The first time you run crontab you'll be prompted to select an editor; if you are not sure which one to use, choose nano by pressing Enter.
+
+Add your scheduled tasks. For help see here: https://www.raspberrypi.org/documentation/linux/usage/cron.md
+
+For example, to schedule the blind to open at 7AM and close again at 6:30PM every day you would enter the following:
+
+```
+0 7 * * * python /var/www/html/python/motor_up.py
+30 18 * * * python /var/www/html/python/motor_down.py
+```
 
 ## License
 
