@@ -2,7 +2,7 @@
 
 # request_reboot.py - Return result before rebooting
 # 
-# Copyright (C) 2016 Dan Jones - https://plasmadan.com
+# Copyright (C) 2017 Dan Jones - https://plasmadan.com
 # 
 # Full project details here:
 # https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller

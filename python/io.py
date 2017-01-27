@@ -2,7 +2,7 @@
 
 # io.py - Setup GPIO ports
 # 
-# Copyright (C) 2016 Dan Jones - https://plasmadan.com
+# Copyright (C) 2017 Dan Jones - https://plasmadan.com
 # 
 # Full project details here:
 # https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller
@@ -44,3 +44,5 @@ wiringpi.pinMode(motor_relay, 1)                             # Set motor_relay t
 wiringpi.pinMode(buffer1, 1)                                 # Set buffer1 to output mode
 wiringpi.pinMode(buffer2, 1)                                 # Set buffer2 to output mode
 wiringpi.pinMode(buffer3, 1)                                 # Set buffer3 to output mode
+wiringpi.pinMode(buffer4, 1)                                 # Set buffer4 to output mode
+wiringpi.pinMode(kill_buffer, 1)                             # Set kill_buffer to output mode

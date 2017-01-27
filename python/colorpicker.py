@@ -2,7 +2,7 @@
 
 # colorpicker.py - Parse data from web GUI
 # 
-# Copyright (C) 2016 Dan Jones - https://plasmadan.com
+# Copyright (C) 2017 Dan Jones - https://plasmadan.com
 # 
 # Full project details here:
 # https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller
@@ -36,6 +36,8 @@ try:
     
     # Change color
     def colorpickerColor(data):
+        LoopKiller(1)                                        # Kill any running loops
+        
         if transition_effect == 'wipe':
             SetColor(data, 1, data[-1], 0)
         
@@ -49,7 +51,15 @@ try:
     
     # Change brigtness
     def colorpickerBrightness(data):
+        LoopKiller(1)                                        # Kill any running loops
+        
         fadeBrightness(data[0], 0)
+        
+        idxs = GetPresetIndex()
+        curr_mode = preset[idxs[0]]                          # Select preset index from list
+        
+        if curr_mode == 'rainbowrotate':                     # Continue rotate
+            RainbowRotate(1)
         
         return True
     
@@ -61,6 +71,9 @@ try:
     
     elif len(data) == 4:
         result = colorpickerColor(data)
+    
+    else:
+        raise ValueError(lang_invalid_color_data)
     
     # Print JSON result
     print json.dumps({'result' : result, 'text' : text, 'received' : data})

@@ -1,6 +1,10 @@
 #!/usr/bin/python
 
-# reboot.py - Reboot the controller
+# motor_up.py - Raise the blind / shutter. Meant for use with crontab
+# 
+# CAUTION!! This script is meant to be used with automatic blind / shutter / projector screen motors with mechanical limits.
+# Do not use with the wrong type of motor or you may overwind your motor and damage something!
+# You should use the 4-core wired type with 2 x Lives (Up & Down)
 # 
 # Copyright (C) 2017 Dan Jones - https://plasmadan.com
 # 
@@ -22,6 +26,17 @@
 
 
 # Import dependancies
-import os
+from time import sleep
+from config import *
+from io import *
 
-os.system('shutdown -r now')
+try:
+    if not wiringpi.digitalRead(motor_pwr):                  # If not running
+        wiringpi.pinMode(buffer2, 1)                         # Trigger buffer2
+        wiringpi.digitalWrite(buffer2, 1)                    # Write high
+        sleep(buffer_sleep)                                  # Delay
+        wiringpi.digitalWrite(buffer2, 0)                    # Write low
+        sleep(buffer_sleep)                                  # Delay
+
+except Exception as e:                                       # Something went wrong
+    print e

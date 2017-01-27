@@ -2,7 +2,7 @@
 
 # functions.py
 # 
-# Copyright (C) 2016 Dan Jones - https://plasmadan.com
+# Copyright (C) 2017 Dan Jones - https://plasmadan.com
 # 
 # Full project details here:
 # https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller
@@ -41,6 +41,75 @@ rainbow_last_step = 0
 # Poll preset button press
 def PollPreset():
     return (not wiringpi.digitalRead(button1) or wiringpi.digitalRead(buffer1))
+
+# Listen for kill loop request from other scripts
+def LoopKiller(kill=0):
+    if kill:
+        wiringpi.pinMode(kill_buffer, 1)                         # Trigger kill buffer
+        wiringpi.digitalWrite(kill_buffer, 1)                    # Write high
+        sleep(buffer_sleep)                                      # Delay
+        wiringpi.digitalWrite(kill_buffer, 0)                    # Write low
+        sleep(buffer_sleep)                                      # Delay
+    
+    return wiringpi.digitalRead(kill_buffer)
+
+# Determine a button action
+def presshold(pwr_cycle=0):
+    global fade_dir
+    
+    sleep(hold_delay)                                        # Delay
+    
+    if lux_enable and not wiringpi.digitalRead(button1):     # Still pressing? Adjust brightness!        
+        col = GetColor()
+        
+        lux = []                                             # Create array of brightness levels to use
+        l_index = 0                                          # Default index
+        
+        start_lux = 0 if pwr_cycle else lux_lowest           # Allows override of lux_lowest when powering up/down the strip
+        
+        for i in range(start_lux, lux_highest, lux_steps):   # Count up to limit and append values
+            lux.append(i)
+        
+        for i in range(-lux_highest, -start_lux, lux_steps): # Count up from -limit and append absolute values
+            lux.append(abs(i))
+        
+        closest = takeClosest(lux, col[-1])
+        
+        try:
+            l_index = lux.index(closest)                     # Get index closest to current brightness level
+        
+        except Exception:
+            pass                                             # Failed. Nevermind, with use default instead
+        
+        lf = lux[l_index]                                    # Select the brightness from array
+        
+        pixel_cache = CachePixels(col)
+        
+        while not wiringpi.digitalRead(button1):             # Re-check...
+            SetPixels(pixel_cache, lf, 1)                    # Set colour / brightness of each pixel
+            
+            op = (l_index + 1) if fade_dir else (l_index - 1)
+            
+            l_index = op % len(lux)                          # Iterate through array of brightness levels, then reset
+            lf = lux[l_index]
+            
+            sleep(lux_delay)                                 # Delay
+        
+        fade_dir = not fade_dir
+        col[-1] = lf
+        
+        SaveCol(col)
+        
+        idxs = GetPresetIndex()
+        curr_mode = preset[idxs[0]]                          # Select preset index from list
+        
+        if curr_mode == 'rainbowrotate':                     # Continue rotate
+            RainbowRotate(1)
+    
+    else:
+        cyclePreset(pwr_cycle)
+    
+    sleep(button1_delay)                                     # Delay
 
 # Return one 24-bit color value 
 def rgbToColor(r, g, b):
@@ -424,7 +493,7 @@ def Rainbow(wipe=0, save_off=0):
     
     strip.setBrightness(lux)                                 # Set brightness level
     
-    colors = [None] * numpixels                              # Create list of indexes
+    colors = [0] * numpixels                                 # Create list of indexes
     
     for i in range(numpixels):
         ledIndex = rainbow_index + i * scale                 # Index of LED i, not rounded / wrapped at 255
@@ -465,7 +534,7 @@ def RainbowRotate(cont=0, save_off=0):
     
     strip.setBrightness(lux)                                 # Set brightness level
     
-    colors = [None] * numpixels                              # Create list of indexes
+    colors = [0] * numpixels                                 # Create list of indexes
     
     def loop():
         global rainbow_last_step
@@ -474,7 +543,7 @@ def RainbowRotate(cont=0, save_off=0):
         currentCycle = 0
         
         while True:                                          # Loop forever
-            if PollPreset():                                 # Poll GPIO
+            if PollPreset() or LoopKiller():                 # Poll GPIO
                 return
             
             for step in range (steps):
@@ -483,7 +552,7 @@ def RainbowRotate(cont=0, save_off=0):
                 start_index = 255 / steps * (step + rainbow_index)
                 
                 for i in range(numpixels):
-                    if PollPreset():                         # Poll GPIO again
+                    if PollPreset() or LoopKiller():         # Poll GPIO again
                         return
                     
                     ledIndex = start_index + i * scale
@@ -508,6 +577,9 @@ def RainbowRotate(cont=0, save_off=0):
     colors.append(lux)
     
     SaveCol(colors, save_off)
+    
+    if not cont:
+        presshold()                                          # Either fade or cycle preset
 
 # Return the closest index to num
 def takeClosest(li, num):

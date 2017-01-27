@@ -2,7 +2,7 @@
 
 # preset.py - Control color & brightness from single push-to-make input
 # 
-# Copyright (C) 2016 Dan Jones - https://plasmadan.com
+# Copyright (C) 2017 Dan Jones - https://plasmadan.com
 # 
 # Full project details here:
 # https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller
@@ -29,74 +29,26 @@ from io import *
 from strip import *
 from functions import *
 
-def presshold(pwr_cycle=0):
-    global fade_dir
-    
-    sleep(hold_delay)                                        # Delay
-    
-    if lux_enable and not wiringpi.digitalRead(button1):     # Still pressing? Adjust brightness!        
-        col = GetColor()
-        
-        lux = []                                             # Create array of brightness levels to use
-        l_index = 0                                          # Default index
-        
-        start_lux = 0 if pwr_cycle else lux_lowest           # Allows override of lux_lowest when powering up/down the strip
-        
-        for i in range(start_lux, lux_highest, lux_steps):   # Count up to limit and append values
-            lux.append(i)
-        
-        for i in range(-lux_highest, -start_lux, lux_steps): # Count up from -limit and append absolute values
-            lux.append(abs(i))
-        
-        closest = takeClosest(lux, col[-1])
-        
-        try:
-            l_index = lux.index(closest)                     # Get index closest to current brightness level
-        
-        except Exception:
-            pass                                             # Failed. Nevermind, with use default instead
-        
-        lf = lux[l_index]                                    # Select the brightness from array
-        
-        pixel_cache = CachePixels(col)
-        
-        while not wiringpi.digitalRead(button1):             # Re-check...
-            SetPixels(pixel_cache, lf, 1)                    # Set colour / brightness of each pixel
-            
-            op = (l_index + 1) if fade_dir else (l_index - 1)
-            
-            l_index = op % len(lux)                          # Iterate through array of brightness levels, then reset
-            lf = lux[l_index]
-            
-            sleep(lux_delay)                                 # Delay
-        
-        fade_dir = not fade_dir
-        col[-1] = lf
-        
-        SaveCol(col)
-        
-        idxs = GetPresetIndex()
-        curr_mode = preset[idxs[0]]                          # Select preset index from list
-        
-        if curr_mode == 'rainbowrotate':                     # Continue rotate
-            RainbowRotate(1)
-    
-    else:
-        cyclePreset(pwr_cycle)
-    
-    sleep(button1_delay)                                     # Delay
-
 ac_status = 0
 
 print 'Preset Button Control Loaded!'
 
 try:
     if ac_detect:
+        if off_at_startup:
+            if wiringpi.digitalRead(ac_detect_port_1):
+                wiringpi.pinMode(relay_1, 1)
+                wiringpi.digitalWrite(relay_1, 1)
+            
+            if wiringpi.digitalRead(ac_detect_port_2):
+                wiringpi.pinMode(relay_2, 1)
+                wiringpi.digitalWrite(relay_2, 1)
+        
         while True:                                          # Loop forever
             if wiringpi.digitalRead(ac_detect_port_1) and not ac_status:
                 presshold(1)                                 # Re-initialize strip
                 ac_status = 1
-                
+            
             if PollPreset():
                 if ac_status:
                     presshold()
@@ -115,6 +67,9 @@ try:
         while True:                                          # Loop forever
             if PollPreset():
                 presshold()
+
+except Exception as e:                                       # Something went wrong
+    print e
 
 finally:
     SetColor([0, 0, 0])

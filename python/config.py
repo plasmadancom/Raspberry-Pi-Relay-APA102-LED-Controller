@@ -2,7 +2,7 @@
 
 # config.py - Define all settings / variables for both Python & PHP
 # 
-# Copyright (C) 2016 Dan Jones - https://plasmadan.com
+# Copyright (C) 2017 Dan Jones - https://plasmadan.com
 # 
 # Full project details here:
 # https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller
@@ -35,8 +35,8 @@ enable_motor_control = 1                  # Enable / disable motor control
 preset_button = 1                         # Add a preset button to web GUI (emulates button1 input)
 reboot_button = 1                         # Add a system reboot button to web GUI
 autoupdate = 1                            # Enable / disable automatic refreshing of web GUI
-refresh_timer = 1000                      # Automatically refresh web GUI (miliseconds)
-ajax_timeout = 5000                       # Response timeout for GUI controls, increase if using over the internet (miliseconds)
+refresh_timer = 1000                      # Automatically refresh web GUI (milliseconds)
+ajax_timeout = 5000                       # Response timeout for GUI controls, increase if using over the internet (milliseconds)
 
 # AC detection
 # Enable for 2-way lighting control
@@ -44,26 +44,30 @@ ajax_timeout = 5000                       # Response timeout for GUI controls, i
 ac_detect = 1                             # Enable / disable AC detection (I1 / I2 directly, or loop-back from change-over relays)
 ac_detect_port_1 = 0                      # I1 AC detection WiringPi port (0 - 1)
 ac_detect_port_2 = 1                      # I2 AC detection WiringPi port (0 - 1)
+off_at_startup = 1                        # Switch off circuits at startup, if any (ac_detect_port_1 -> relay_1, ac_detect_port_2 -> relay_2)
 
 # Motor
 button2 = 6                               # Motor control input WiringPi port (6 - 7)
 button2_delay = 0.4                       # Prevent accidental double button2 presses with this delay (seconds)
-motor_timer = 10                          # Minimum time to complete one FULL blind cycle (seconds)
+motor_timer = 25                          # Minimum time to complete one FULL blind cycle (seconds)
+motor_auto_up_limit = 70                  # Limit the automatic up cycle to stop the blind / shutter based on percetage of motor_timer, 0 to disable
 motor_pwr = 4                             # Main switching relay WiringPi port
 motor_relay = 5                           # Changeover relay WiringPi port
+swap_motor_direction = 0                  # Swap motor direction if wired backwards (0 or 1)
 motor_direction_delay = 0.2               # Wait before changing motor direction (seconds) - FOR SAFETY!!
-motor_direction = 0                       # Starting motor direction (0 or 1) depending on wiring
 motor_delay = 0.5                         # Minimum time to run motor (seconds)
 
 # Relays
 relay_1 = 3                               # Channel 1 relay WiringPi port
 relay_2 = 2                               # Channel 2 relay WiringPi port
-buffer_sleep = 50000                      # Time to change buffer status back to off (microseconds)
 
 # Buffer
 buffer1 = 17                              # Spare WiringPi ports to use as simple way to communicate between PHP & Python
 buffer2 = 18
 buffer3 = 19
+buffer4 = 21                              # Use 20 on Raspberry Pi B (rev. 2)
+kill_buffer = 22                          # Used to kill loops before running script. DOES NOT WORK ON Raspberry Pi B (rev. 1 & 2)
+buffer_sleep = 0.05                       # Time to change buffer status back to off (seconds)
 
 # LEDs
 numpixels = 600                           # Number of LEDs in strip
@@ -71,26 +75,26 @@ spi = 7800000                             # SPI interface rate, adjust if LEDs f
 rgb_order = 'bgr'                         # Adafruit DotStars (APA102C) use 'bgr', change order to work with different strips
 button1 = 7                               # Preset control input WiringPi port (6 - 7)
 button1_delay = 0.2                       # Prevent accidental double button1 presses with this delay (seconds)
-hold_delay = 0.2                          # Mimimum time to wait before re-checking button1 state
+hold_delay = 0.2                          # Mimimum time to wait before re-checking button1 state (seconds)
 lux_enable = 1                            # Enable / disable brightness cycle. Will cycle colors if disabled. Hold button1 down to cycle
 lux_steps = 4                             # Steps to count when creating brightness levels, lower steps means smoother transition (1 - 25)
-lux_delay = 0.05                          # Delay when cyclying through brightness levels (seconds)
+lux_delay = 0.05                          # Delay when cycling through brightness levels (seconds)
 lux_lowest = 10                           # Lowest permissible brightness level (0 - 255)
 lux_highest = 255                         # Highest permissible brightness level (1 - 255)
 fade_dir = 0                              # Fade up / down initial direction
 save_caching = 0                          # Enable / disable caching of color & brightness to in-memory SQLite database (EXPERIMENTAL)
 save_to_file = 1                          # Enable / disable saving of color & brightness to file
 savefile = '/var/www/html/color.txt'      # File to save color & brightness level for next boot, needs 755 permissions!
-save_off = 1                              # Enable / disable saving of LED off state (this also supercedes lux_lowest)
+save_off = 1                              # Enable / disable saving of LED off state (this also supersedes lux_lowest)
 backup_col = [255, 255, 255, 128]         # Backup if savefile error, list of 4 digits 0 - 255 (Red, Green, Blue, Brightness)
 
 # Transitions / effects
 transition_effect = 'fade'                # fade / wipe / 0 (none)
 wipe_effects = 1                          # Cannot use color fade when transitioning to / from an effect, use (1) to use wipe instead, or (0) to skip
-shift_pixels = 0                          # Shift position of LED 1 for use with transition effects (+/-)
+shift_pixels = 0                        # Shift position of LED 1 for use with transition effects (+/-)
 color_fade_steps = 16                     # Steps when fading between colors
 color_fade_delay = 0.02                   # Delay between each color fade step (seconds)
-rainbow_start = 1                         # Start LED for rainbow effect
+rainbow_start = 1                       # Start LED for rainbow effect
 
 # Starting index for preset list
 preset_idx = 0
@@ -99,8 +103,8 @@ preset_idx = 0
 # Supports RGB or 24-bit color format
 # Don't put two of the same color / effect or you'll mess-up the indexing
 preset = [
-	'rainbow',                            # RGB color wheel (static)
-#	'rainbowrotate',                      # Rotating RGB color wheel (EXPERIMENTAL)
+#	'rainbow',                            # RGB color wheel (static)
+	'rainbowrotate',                      # Rotating RGB color wheel
 	[255, 0, 0],                          # Pure Red
 	[255, 50, 0],                         # Orange
 	[255, 255, 0],                        # Yellow
