@@ -91,10 +91,10 @@ backup_col = [255, 255, 255, 128]         # Backup if savefile error, list of 4 
 # Transitions / effects
 transition_effect = 'fade'                # fade / wipe / 0 (none)
 wipe_effects = 1                          # Cannot use color fade when transitioning to / from an effect, use (1) to use wipe instead, or (0) to skip
-shift_pixels = 0                        # Shift position of LED 1 for use with transition effects (+/-)
+shift_pixels = 0                          # Shift position of LED 1 for use with transition effects (+/-)
 color_fade_steps = 16                     # Steps when fading between colors
 color_fade_delay = 0.02                   # Delay between each color fade step (seconds)
-rainbow_start = 1                       # Start LED for rainbow effect
+rainbow_start = 1                         # Start LED for rainbow effect
 
 # Starting index for preset list
 preset_idx = 0
