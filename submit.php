@@ -22,6 +22,8 @@
  * -----------------------------------------------------------------------------
  */
 
+// Allow requests via extensions
+header('Access-Control-Allow-Origin: chrome-extension://jnmjhaaahpdapgcddlgaldjhapmoapje');
 
 require_once 'config.php';
 require_once 'functions.php';
