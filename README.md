@@ -130,16 +130,34 @@ git pull origin
 ./build
 ```
 
-Install python-dev  & pip
+Before prceeding, check WiringPi is working correctly.
 
 ```
-apt-get install python-dev python-pip -y
+gpio -v
+gpio readall
 ```
 
-Install WiringPi
+## Raspberry Pi B+ Issue: "Unable to determine hardware version" fix:
+
+This error is caused by an incomapibility with WiringPi on Kernel 4.9.x. If you encounter this error I suggest downgrading your Kernel until a proper solution is released.
+
+To downgrade the Kernel, first install rpi-update.
 
 ```
-pip install wiringpi2
+apt-get install rpi-update
+```
+
+Downgrade to Kernel 4.4.50-v7+ (from 4.9.x)
+
+```
+rpi-update 52241088c1da59a359110d39c1875cda56496764
+```
+
+Reboot the Pi and test WiringPi again.
+
+```
+gpio -v
+gpio readall
 ```
 
 ## Enable SPI
@@ -183,7 +201,23 @@ Note: If your Raspberry Pi is on a shared network you may want to find a more se
 echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 ```
 
-To make the Python scripts run at startup, edit rc.local:
+Before proceeding, make sure the required scripts run correctly without issue.
+
+```
+python python/preset.py
+```
+
+You should see "Preset Button Control Loaded!". Do the same test for motor.py if you require it.
+
+```
+python python/motor.py
+```
+
+You should see "Motor Button Control Loaded!".
+
+Assuming no issues, set these scripts to run automatically at startup.
+
+Edit rc.local:
 
 ```
 nano /etc/rc.local
