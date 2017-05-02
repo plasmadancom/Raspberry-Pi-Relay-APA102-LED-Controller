@@ -130,7 +130,7 @@ git pull origin
 ./build
 ```
 
-Before prceeding, check WiringPi is working correctly.
+Before proceeding, check WiringPi is working correctly.
 
 ```
 gpio -v
