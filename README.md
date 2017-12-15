@@ -226,8 +226,8 @@ nano /etc/rc.local
 Add before exit 0
 
 ```
-python /var/www/html/python/motor.py&
-python /var/www/html/python/preset.py&
+python /var/www/html/python/motor.py &
+python /var/www/html/python/preset.py &
 ```
 
 The scripts are independent from each other to allow you to just use what you need.
