@@ -1,10 +1,10 @@
 # Raspberry Pi Relay & APA102 LED Controller
 
-![APA102 LED Controller Responsive Web GUI Mockup](http://img.photobucket.com/albums/v287/plasma_dan/responsive-showcase-mockup_zpsqssh3wjo.png~original)
+![APA102 LED Controller Responsive Web GUI Mockup](/img/responsive-showcase-mockup.jpg)
 
 Raspberry Pi Relay & APA102 LED controller allows control & switching of APA102 addressable LED strips (and LED driver) using a web GUI. Motor controller functionality is also built-in to control hard-wired home automation type blind / projector screen motors. Ideal for use in home cinema applications. Unlike regular "dumb" RGB strips, addressable strips have independently controlled LEDs, allowing for the creation of light effects & sequences.
 
-[![Home Cinema Rainbow Rotate RGB LED Effect](http://img.photobucket.com/albums/v287/plasma_dan/2016-10-04%2002.57.49_zpsnyoocye7.jpg~original)](https://www.youtube.com/watch?v=rt4a6Lg4dxs "Addressable APA102 - Home Cinema RGB LED Lighting - Rainbow Rotate Effect")
+[![Home Cinema Rainbow Rotate RGB LED Effect](/img/rainbow-rgb-led-soffit-lighting.jpg)
 
 ## Features
 
@@ -22,7 +22,7 @@ Home cinema build log: https://www.avforums.com/threads/ongoing-plasmadans-livin
 
 ## Responsive Web GUI
 
-![APA102 LED Controller iPhone6 Web GUI Mockup](http://img.photobucket.com/albums/v287/plasma_dan/iphone6-mockup_zpsm93mbcdt.png~original)
+![APA102 LED Controller iPhone6 Web GUI Mockup](/img/iphone6-mockup.jpg)
 
 The GUI includes controls for the changeover relay channels, motorised blind / projector screen, a full RGB color picker for the APA102 LEDs and a preset control to cycle built-in light modes / effects. There is also the ability to reboot the Raspberry Pi directly from the GUI, making development & testing easier for your application.
 
@@ -40,10 +40,10 @@ https://chrome.google.com/webstore/detail/apa102-led-controller/jnmjhaaahpdapgcd
 
 ## Prerequisites
 
-Raspberry Pi with Raspian:
-https://www.raspberrypi.org/downloads/raspbian/
+Raspberry Pi with Raspberry Pi OS:
+https://www.raspberrypi.org/downloads/raspberry-pi-os/
 
-I recommend a clean Raspian install before proceeding.
+I recommend a clean install before proceeding.
 
 ## Dependencies
 
@@ -53,25 +53,13 @@ https://github.com/adafruit/Adafruit_DotStar_Pi
 
 ## Build Your Own!
 
-![APA102 LED Controller PCB Animated](/pcb-animated.gif)
+![APA102 LED Controller PCB Animated](/img/pcb-animated.gif)
 
 The hardware for this controller is quite simple, all the components are readily available. If you decide to build one for yourself, I have provided the necessary Gerber files for the PCB. These can either be sent to a PCB manufacturer like [PCBway](http://www.pcbway.com/setinvite.aspx?inviteid=19024), or you can etch the board yourself (see included transfer pdf). The PCB design is single-sided to make it easier to re-create yourself. The PCB was designed to fit into a small case ([CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75)). If you require additional inputs / outputs, or want to make any other changes; you may want to create your own PCB instead.
 
-![APA102 LED Controller PCB Transfer](/pcb-black-transfer.png)
+![APA102 LED Controller PCB Transfer](/img/pcb-black-transfer.png)
 
 Parts list: https://goo.gl/5SdG7h
-
-Alternatively you can buy a PCB or complete controller from me. Contact me on AV Forums [here](https://www.avforums.com/members/plasma-dan.314603/).
-
-## Just The Basics
-
-If all you want is LED control via Raspberry Pi, you can do this without a PCB. The circuit diagram below shows how to connect APA102 LEDs to a Raspberry Pi using a [74AHCT125 - Quad Level-Shifter](https://www.adafruit.com/product/1787). You will still need an LED driver to power the LEDs. The LEDs must share a common-ground with the Raspberry Pi & LED driver.
-
-![APA102 LED Quad Level-Shifter Circuit Diagram](/apa102-raspberry-pi-circuit-diagram.png)
-
-## Stackable
-
-The PCB can easily be stacked using standoffs. The [CAMDENBOSS 7200-269C](http://camdenboss.com/enclosures/heavy-duty-enclosures/polycarbonate-clear-lid-cases#7200-series-grey-clear200x120x75) enclosure is tall enough to accommodate two stacked boards. So if you require more channels; this is a simple solution.
 
 ## Raspberry Pi Compatibility
 
@@ -81,11 +69,11 @@ The PCB design uses a 26-way header (same as the Raspberry Pi model B). A 26-way
 
 ## Wiring
 
-![APA102 LED Controller Wired](/Installation-example.jpg)
+![APA102 LED Controller Wired](/img/Installation-example.jpg)
 
 The controller is designed to work with 4-wire type addressable LED strips; such as APA102 (AKA Adafruit DotStars) or WS2801. Everything else on the controller is pretty-much universal in terms of wiring options. I have provided an example wiring diagram:
 
-![APA102 LED Controller Wiring Diagram Example](/example-wiring-diagram-v2.png)
+![APA102 LED Controller Wiring Diagram Example](/img/example-wiring-diagram-v2.png)
 
 In this example, the LED driver and halogen lighting circuits are linked to the changeover relay channels. This allows for standard 2-way / intermediate (3-way if you're outside the UK) light switches to be used in conjunction with the controller. This means that if the controller went offline for whatever reason, your lights will still work!
 
@@ -93,71 +81,32 @@ Notice in the example that the switched-line is looped back into the AC detect c
 
 # Installation
 
-```
-sudo bash
-```
+Tip: For headless setup, SSH can be enabled by placing a file named 'ssh' (no extension) onto the boot partition of the SD card.
 
-Update Raspian
+Update your Raspberry Pi to ensure all the latest packages are installed.
 
 ```
-apt-get update
-apt-get upgrade
+sudo apt update
+sudo apt upgrade
 ```
 
-## Install Apache components
+## Install Apache & PHP
 
 ```
-apt-get install apache2 php5 libapache2-mod-php5
+sudo apt install apache2 php libapache2-mod-php -y
+```
+
+Test the webserver is working. Navigate to http://localhost/ on the Pi itself, or http://192.168.1.10 (whatever the Pi's IP address is) from another computer on the network. Use the snippet below to get the Pi's IP address in command line.
+
+```
+hostname -I
 ```
 
 ## Install WiringPi
 
 ```
-apt-get install git-core -y
-```
-
-Get repo
-
-```
-git clone git://git.drogon.net/wiringPi
-```
-
-Build WiringPi
-
-```
-cd wiringPi
-git pull origin
-./build
-```
-
-Before proceeding, check WiringPi is working correctly.
-
-```
-gpio -v
-gpio readall
-```
-
-## Raspberry Pi B+ Issue: "Unable to determine hardware version" fix:
-
-This error is caused by an incomapibility with WiringPi on Kernel 4.9.x. If you encounter this error I suggest downgrading your Kernel until a proper solution is released.
-
-To downgrade the Kernel, first install rpi-update.
-
-```
-apt-get install rpi-update
-```
-
-Downgrade to Kernel 4.4.50-v7+ (from 4.9.x)
-
-```
-rpi-update 52241088c1da59a359110d39c1875cda56496764
-```
-
-Reboot the Pi and test WiringPi again.
-
-```
-gpio -v
-gpio readall
+sudo apt install wiringpi python-pip -y
+sudo pip install wiringpi
 ```
 
 ## Enable SPI
@@ -165,40 +114,32 @@ gpio readall
 Needed for RGB LEDs to work.
 
 ```
-raspi-config
+sudo raspi-config
 ```
 
 Scroll to "Advanced Options", "SPI", set to enabled.
 
-## Clone Repo Contents
+## Install HAT-GUI
+
+You need to clone the web GUI files from the `/gui` subdirectory, to do that we need to install subversion.
 
 ```
-cd /var/www/html
+sudo apt install subversion -y
 ```
 
-Empty default Apache files
+Empty default Apache files and install GUI.
 
 ```
-rm -rf *
+sudo rm -rf /var/www/html/*
+sudo svn checkout https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller/trunk/gui /var/www/html
 ```
 
-Clone repo
-
-```
-git clone https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller .
-```
+### Permissions
 
 Be sure to set file permissions to 755 in the web directory.
 
 ```
-chmod -R 755 /var/www
-```
-
-Apache requires sudo permission to use WiringPi.
-Note: If your Raspberry Pi is on a shared network you may want to find a more secure method than this.
-
-```
-echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+sudo chmod -R 755 /var/www
 ```
 
 Before proceeding, make sure the required scripts run correctly without issue.
@@ -220,7 +161,7 @@ Assuming no issues, set these scripts to run automatically at startup.
 Edit rc.local:
 
 ```
-nano /etc/rc.local
+sudo nano /etc/rc.local
 ```
 
 Add before exit 0
@@ -232,22 +173,22 @@ python /var/www/html/python/preset.py &
 
 The scripts are independent from each other to allow you to just use what you need.
 
-## Optional: install vsftpd for easier file editing
+## Optional: Install vsftpd for Easier File Editing
 
 ```
-apt-get install vsftpd -y
+sudo apt install vsftpd -y
 ```
 
-Change user for vsftpd
+Change user for vsftpd.
 
 ```
-chown -R pi /var/www
+sudo chown -R pi /var/www
 ```
 
-Edit vsftpd.conf
+Edit vsftpd.conf.
 
 ```
-nano /etc/vsftpd.conf
+sudo nano /etc/vsftpd.conf
 ```
 
 Uncomment the following line:
@@ -262,11 +203,13 @@ Add the following line:
 force_dot_files=YES
 ```
 
-Restart vsftpd
+Save and exit nano, then restart vsftpd.
 
 ```
-service vsftpd restart
+sudo service vsftpd restart
 ```
+
+You should now be able to login via FTP.
 
 ## Config
 
