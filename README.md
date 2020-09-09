@@ -1,10 +1,13 @@
+![php 5.4+](https://img.shields.io/badge/php-v5.4%2B-blue) [![maintained](https://img.shields.io/badge/maintained-yes-green.svg)](https://github.com/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller/graphs/commit-activity) ![licence](https://img.shields.io/github/license/plasmadancom/Raspberry-Pi-Relay-APA102-LED-Controller)
+
+
 # Raspberry Pi Relay & APA102 LED Controller
 
 ![APA102 LED Controller Responsive Web GUI Mockup](/img/responsive-showcase-mockup.jpg)
 
 Raspberry Pi Relay & APA102 LED controller allows control & switching of APA102 addressable LED strips (and LED driver) using a web GUI. Motor controller functionality is also built-in to control hard-wired home automation type blind / projector screen motors. Ideal for use in home cinema applications. Unlike regular "dumb" RGB strips, addressable strips have independently controlled LEDs, allowing for the creation of light effects & sequences.
 
-[![Home Cinema Rainbow Rotate RGB LED Effect](/img/rainbow-rgb-led-soffit-lighting.jpg)
+![Home Cinema Rainbow Rotate RGB LED Effect](/img/rainbow-rgb-led-soffit-lighting.jpg)
 
 ## Features
 
@@ -119,7 +122,7 @@ sudo raspi-config
 
 Scroll to "Advanced Options", "SPI", set to enabled.
 
-## Install HAT-GUI
+## Install GUI
 
 You need to clone the web GUI files from the `/gui` subdirectory, to do that we need to install subversion.
 
